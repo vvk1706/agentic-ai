@@ -1,0 +1,18 @@
+{
+    "servers": {
+      "Instana MCP Server": {
+        "command": "npx",
+        "args": [
+          "mcp-remote", "http://0.0.0.0:8080/mcp/",
+          "--allow-http",
+          "--header", "instana-base-url: https://ibmdevsandbox-instanaibm.instana.io",
+          "--header", "instana-api-token: 2i3NmdixRrKdV8CdQMTw-Q"
+        ],
+        "env": {
+          "PATH": "/usr/local/bin:/bin:/usr/bin,/Users/valerykornienko/.nvm/versions/node/v22.4.1/bin",
+          "SHELL": "/bin/zsh"
+        }
+      }
+    }
+}
+

@@ -1,0 +1,817 @@
+{
+  "/api/0/applications": {
+    "url": "https://ibmdevsandbox-instanaibm.instana.io/api/0/applications",
+    "status_code": 404,
+    "body": {
+      "code": 404,
+      "message": "HTTP 404 Not Found"
+    }
+  },
+  "/api/0/services": {
+    "url": "https://ibmdevsandbox-instanaibm.instana.io/api/0/services",
+    "status_code": 404,
+    "body": {
+      "code": 404,
+      "message": "HTTP 404 Not Found"
+    }
+  },
+  "/api/0/endpoints": {
+    "url": "https://ibmdevsandbox-instanaibm.instana.io/api/0/endpoints",
+    "status_code": 404,
+    "body": {
+      "code": 404,
+      "message": "HTTP 404 Not Found"
+    }
+  },
+  "/api/0/hosts": {
+    "url": "https://ibmdevsandbox-instanaibm.instana.io/api/0/hosts",
+    "status_code": 404,
+    "body": {
+      "code": 404,
+      "message": "HTTP 404 Not Found"
+    }
+  },
+  "/api/0/agents": {
+    "url": "https://ibmdevsandbox-instanaibm.instana.io/api/0/agents",
+    "status_code": 404,
+    "body": {
+      "code": 404,
+      "message": "HTTP 404 Not Found"
+    }
+  },
+  "/api/0/resources": {
+    "url": "https://ibmdevsandbox-instanaibm.instana.io/api/0/resources",
+    "status_code": 404,
+    "body": {
+      "code": 404,
+      "message": "HTTP 404 Not Found"
+    }
+  },
+  "/api/application-monitoring/applications": {
+    "url": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications",
+    "error": "HTTPSConnectionPool(host='ibmdevsandbox-instanaibm.instana.io', port=443): Read timed out. (read timeout=15)"
+  },
+  "/api/application-monitoring/endpoints": {
+    "url": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/endpoints",
+    "status_code": 404,
+    "body": {
+      "code": 404,
+      "message": "HTTP 404 Not Found"
+    }
+  },
+  "/api/application-monitoring/services": {
+    "url": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/services",
+    "status_code": 200,
+    "body": {
+      "items": [
+        {
+          "id": "3b9e15ac8c1e29087b0ab7078f70d74af400e0bf",
+          "label": "zswap-shrink",
+          "types": [],
+          "technologies": [
+            "openTelemetry"
+          ],
+          "snapshotIds": [],
+          "entityType": "SERVICE",
+          "_links": {
+            "self": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=3b9e15ac8c1e29087b0ab7078f70d74af400e0bf?to=1761098907807&windowSize=600000",
+            "endpoints": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=3b9e15ac8c1e29087b0ab7078f70d74af400e0bf/endpoints?to=1761098907807&windowSize=600000"
+          }
+        },
+        {
+          "id": "af5e82fc67cdf3ae7408fef0ca2373f5b37bc99f",
+          "label": "zen-audit-svc.zen",
+          "types": [
+            "HTTP"
+          ],
+          "technologies": [],
+          "snapshotIds": [],
+          "entityType": "SERVICE",
+          "_links": {
+            "self": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=af5e82fc67cdf3ae7408fef0ca2373f5b37bc99f?to=1761098907807&windowSize=600000",
+            "endpoints": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=af5e82fc67cdf3ae7408fef0ca2373f5b37bc99f/endpoints?to=1761098907807&windowSize=600000"
+          }
+        },
+        {
+          "id": "6a9d3797bdb245a4698c2a3c31405d3c6dee5106",
+          "label": "xfsalloc",
+          "types": [],
+          "technologies": [
+            "openTelemetry"
+          ],
+          "snapshotIds": [],
+          "entityType": "SERVICE",
+          "_links": {
+            "self": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=6a9d3797bdb245a4698c2a3c31405d3c6dee5106?to=1761098907807&windowSize=600000",
+            "endpoints": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=6a9d3797bdb245a4698c2a3c31405d3c6dee5106/endpoints?to=1761098907807&windowSize=600000"
+          }
+        },
+        {
+          "id": "3f1dfa9224725b9ef64c7313a95304b8edc789a2",
+          "label": "xfsaild/vda1",
+          "types": [],
+          "technologies": [
+            "openTelemetry"
+          ],
+          "snapshotIds": [],
+          "entityType": "SERVICE",
+          "_links": {
+            "self": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=3f1dfa9224725b9ef64c7313a95304b8edc789a2?to=1761098907807&windowSize=600000",
+            "endpoints": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=3f1dfa9224725b9ef64c7313a95304b8edc789a2/endpoints?to=1761098907807&windowSize=600000"
+          }
+        },
+        {
+          "id": "68dda7d39caf31f7f0d2362a2d2b484bd73a5889",
+          "label": "xfsaild/dm-0",
+          "types": [],
+          "technologies": [
+            "openTelemetry"
+          ],
+          "snapshotIds": [],
+          "entityType": "SERVICE",
+          "_links": {
+            "self": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=68dda7d39caf31f7f0d2362a2d2b484bd73a5889?to=1761098907807&windowSize=600000",
+            "endpoints": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=68dda7d39caf31f7f0d2362a2d2b484bd73a5889/endpoints?to=1761098907807&windowSize=600000"
+          }
+        },
+        {
+          "id": "098f1843edcd8394c3fec43b0970a35878340713",
+          "label": "xfs_mru_cache",
+          "types": [],
+          "technologies": [
+            "openTelemetry"
+          ],
+          "snapshotIds": [],
+          "entityType": "SERVICE",
+          "_links": {
+            "self": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=098f1843edcd8394c3fec43b0970a35878340713?to=1761098907807&windowSize=600000",
+            "endpoints": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=098f1843edcd8394c3fec43b0970a35878340713/endpoints?to=1761098907807&windowSize=600000"
+          }
+        },
+        {
+          "id": "daf8bc9dee060a451b30feda7be437fc9fa5c214",
+          "label": "xfs-reclaim/vda",
+          "types": [],
+          "technologies": [
+            "openTelemetry"
+          ],
+          "snapshotIds": [],
+          "entityType": "SERVICE",
+          "_links": {
+            "self": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=daf8bc9dee060a451b30feda7be437fc9fa5c214?to=1761098907807&windowSize=600000",
+            "endpoints": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=daf8bc9dee060a451b30feda7be437fc9fa5c214/endpoints?to=1761098907807&windowSize=600000"
+          }
+        },
+        {
+          "id": "841e37b143d4d6caabe72af6f134d6aed04fd0e4",
+          "label": "xfs-reclaim/dm-",
+          "types": [],
+          "technologies": [
+            "openTelemetry"
+          ],
+          "snapshotIds": [],
+          "entityType": "SERVICE",
+          "_links": {
+            "self": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=841e37b143d4d6caabe72af6f134d6aed04fd0e4?to=1761098907807&windowSize=600000",
+            "endpoints": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=841e37b143d4d6caabe72af6f134d6aed04fd0e4/endpoints?to=1761098907807&windowSize=600000"
+          }
+        },
+        {
+          "id": "d57dc664f947a2835b4b856c8edd1ec6db3a35a9",
+          "label": "xfs-log/vda1",
+          "types": [],
+          "technologies": [
+            "openTelemetry"
+          ],
+          "snapshotIds": [],
+          "entityType": "SERVICE",
+          "_links": {
+            "self": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=d57dc664f947a2835b4b856c8edd1ec6db3a35a9?to=1761098907807&windowSize=600000",
+            "endpoints": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=d57dc664f947a2835b4b856c8edd1ec6db3a35a9/endpoints?to=1761098907807&windowSize=600000"
+          }
+        },
+        {
+          "id": "5a0f80659b7e9d71ff0638d5b3ba7a336e1c163b",
+          "label": "xfs-log/dm-0",
+          "types": [],
+          "technologies": [
+            "openTelemetry"
+          ],
+          "snapshotIds": [],
+          "entityType": "SERVICE",
+          "_links": {
+            "self": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=5a0f80659b7e9d71ff0638d5b3ba7a336e1c163b?to=1761098907807&windowSize=600000",
+            "endpoints": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=5a0f80659b7e9d71ff0638d5b3ba7a336e1c163b/endpoints?to=1761098907807&windowSize=600000"
+          }
+        },
+        {
+          "id": "21c4edd6805b0c04cb6846bed7a8c212a09f7a5c",
+          "label": "xfs-inodegc/vda",
+          "types": [],
+          "technologies": [
+            "openTelemetry"
+          ],
+          "snapshotIds": [],
+          "entityType": "SERVICE",
+          "_links": {
+            "self": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=21c4edd6805b0c04cb6846bed7a8c212a09f7a5c?to=1761098907807&windowSize=600000",
+            "endpoints": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=21c4edd6805b0c04cb6846bed7a8c212a09f7a5c/endpoints?to=1761098907807&windowSize=600000"
+          }
+        },
+        {
+          "id": "d7d16e6f78b9159840bbe54829afde922cc6f840",
+          "label": "xfs-inodegc/dm-",
+          "types": [],
+          "technologies": [
+            "openTelemetry"
+          ],
+          "snapshotIds": [],
+          "entityType": "SERVICE",
+          "_links": {
+            "self": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=d7d16e6f78b9159840bbe54829afde922cc6f840?to=1761098907807&windowSize=600000",
+            "endpoints": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=d7d16e6f78b9159840bbe54829afde922cc6f840/endpoints?to=1761098907807&windowSize=600000"
+          }
+        },
+        {
+          "id": "ba9396e2e608128987949a0904066f380a35e1d1",
+          "label": "xfs-conv/vda1",
+          "types": [],
+          "technologies": [
+            "openTelemetry"
+          ],
+          "snapshotIds": [],
+          "entityType": "SERVICE",
+          "_links": {
+            "self": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=ba9396e2e608128987949a0904066f380a35e1d1?to=1761098907807&windowSize=600000",
+            "endpoints": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=ba9396e2e608128987949a0904066f380a35e1d1/endpoints?to=1761098907807&windowSize=600000"
+          }
+        },
+        {
+          "id": "52d20266acd00ad00b50387fb49897965fe3bd69",
+          "label": "xfs-conv/dm-0",
+          "types": [],
+          "technologies": [
+            "openTelemetry"
+          ],
+          "snapshotIds": [],
+          "entityType": "SERVICE",
+          "_links": {
+            "self": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=52d20266acd00ad00b50387fb49897965fe3bd69?to=1761098907807&windowSize=600000",
+            "endpoints": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=52d20266acd00ad00b50387fb49897965fe3bd69/endpoints?to=1761098907807&windowSize=600000"
+          }
+        },
+        {
+          "id": "090a58e206349d1961565471a5712896e492a466",
+          "label": "xfs-cil/vda1",
+          "types": [],
+          "technologies": [
+            "openTelemetry"
+          ],
+          "snapshotIds": [],
+          "entityType": "SERVICE",
+          "_links": {
+            "self": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=090a58e206349d1961565471a5712896e492a466?to=1761098907807&windowSize=600000",
+            "endpoints": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=090a58e206349d1961565471a5712896e492a466/endpoints?to=1761098907807&windowSize=600000"
+          }
+        },
+        {
+          "id": "52d07454865d59e6d0396789da729517c0f53cd0",
+          "label": "xfs-cil/dm-0",
+          "types": [],
+          "technologies": [
+            "openTelemetry"
+          ],
+          "snapshotIds": [],
+          "entityType": "SERVICE",
+          "_links": {
+            "self": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=52d07454865d59e6d0396789da729517c0f53cd0?to=1761098907807&windowSize=600000",
+            "endpoints": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=52d07454865d59e6d0396789da729517c0f53cd0/endpoints?to=1761098907807&windowSize=600000"
+          }
+        },
+        {
+          "id": "d88ddf488df303441bf1dc65317f816ea7e0b9ea",
+          "label": "xfs-buf/vda1",
+          "types": [],
+          "technologies": [
+            "openTelemetry"
+          ],
+          "snapshotIds": [],
+          "entityType": "SERVICE",
+          "_links": {
+            "self": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=d88ddf488df303441bf1dc65317f816ea7e0b9ea?to=1761098907807&windowSize=600000",
+            "endpoints": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=d88ddf488df303441bf1dc65317f816ea7e0b9ea/endpoints?to=1761098907807&windowSize=600000"
+          }
+        },
+        {
+          "id": "d0b5d9ad658b9f5f36d051b46e1be6a36125aab5",
+          "label": "xfs-buf/dm-0",
+          "types": [],
+          "technologies": [
+            "openTelemetry"
+          ],
+          "snapshotIds": [],
+          "entityType": "SERVICE",
+          "_links": {
+            "self": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=d0b5d9ad658b9f5f36d051b46e1be6a36125aab5?to=1761098907807&windowSize=600000",
+            "endpoints": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=d0b5d9ad658b9f5f36d051b46e1be6a36125aab5/endpoints?to=1761098907807&windowSize=600000"
+          }
+        },
+        {
+          "id": "791a29dfdc57c882cd357d8eaff647f00c125b0f",
+          "label": "xfs-blockgc/vda",
+          "types": [],
+          "technologies": [
+            "openTelemetry"
+          ],
+          "snapshotIds": [],
+          "entityType": "SERVICE",
+          "_links": {
+            "self": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=791a29dfdc57c882cd357d8eaff647f00c125b0f?to=1761098907807&windowSize=600000",
+            "endpoints": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=791a29dfdc57c882cd357d8eaff647f00c125b0f/endpoints?to=1761098907807&windowSize=600000"
+          }
+        },
+        {
+          "id": "31df4f898de720d72ad931037fc9934a5950245d",
+          "label": "xfs-blockgc/dm-",
+          "types": [],
+          "technologies": [
+            "openTelemetry"
+          ],
+          "snapshotIds": [],
+          "entityType": "SERVICE",
+          "_links": {
+            "self": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=31df4f898de720d72ad931037fc9934a5950245d?to=1761098907807&windowSize=600000",
+            "endpoints": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=31df4f898de720d72ad931037fc9934a5950245d/endpoints?to=1761098907807&windowSize=600000"
+          }
+        },
+        {
+          "id": "88e69eb3dc2b5ceb1030642e71a95dfb85d5544e",
+          "label": "xanderz-cd-reserve1-rook-ceph-rook-ceph-mon-c",
+          "types": [],
+          "technologies": [],
+          "snapshotIds": [],
+          "entityType": "SERVICE",
+          "_links": {
+            "self": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=88e69eb3dc2b5ceb1030642e71a95dfb85d5544e?to=1761098907807&windowSize=600000",
+            "endpoints": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=88e69eb3dc2b5ceb1030642e71a95dfb85d5544e/endpoints?to=1761098907807&windowSize=600000"
+          }
+        },
+        {
+          "id": "72ca2198e743929770d3974c76ca884a308e4539",
+          "label": "xanderz-cd-reserve1-rook-ceph-rook-ceph-mon-b",
+          "types": [],
+          "technologies": [],
+          "snapshotIds": [],
+          "entityType": "SERVICE",
+          "_links": {
+            "self": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=72ca2198e743929770d3974c76ca884a308e4539?to=1761098907807&windowSize=600000",
+            "endpoints": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=72ca2198e743929770d3974c76ca884a308e4539/endpoints?to=1761098907807&windowSize=600000"
+          }
+        },
+        {
+          "id": "06a74a10d9396baec22cade646b142a75c540f0b",
+          "label": "xanderz-cd-reserve1-rook-ceph-rook-ceph-mon-a",
+          "types": [],
+          "technologies": [],
+          "snapshotIds": [],
+          "entityType": "SERVICE",
+          "_links": {
+            "self": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=06a74a10d9396baec22cade646b142a75c540f0b?to=1761098907807&windowSize=600000",
+            "endpoints": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=06a74a10d9396baec22cade646b142a75c540f0b/endpoints?to=1761098907807&windowSize=600000"
+          }
+        },
+        {
+          "id": "1bad0b813bfd7f08c3df173c749e4660a3b985f2",
+          "label": "xanderz-cd-reserve1-rook-ceph-rook-ceph-mgr-dashboard",
+          "types": [],
+          "technologies": [],
+          "snapshotIds": [],
+          "entityType": "SERVICE",
+          "_links": {
+            "self": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=1bad0b813bfd7f08c3df173c749e4660a3b985f2?to=1761098907807&windowSize=600000",
+            "endpoints": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=1bad0b813bfd7f08c3df173c749e4660a3b985f2/endpoints?to=1761098907807&windowSize=600000"
+          }
+        },
+        {
+          "id": "cfa78e2c03eebb7fe726d395a0377be3e48df6a6",
+          "label": "xanderz-cd-reserve1-rook-ceph-rook-ceph-mgr",
+          "types": [],
+          "technologies": [],
+          "snapshotIds": [],
+          "entityType": "SERVICE",
+          "_links": {
+            "self": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=cfa78e2c03eebb7fe726d395a0377be3e48df6a6?to=1761098907807&windowSize=600000",
+            "endpoints": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=cfa78e2c03eebb7fe726d395a0377be3e48df6a6/endpoints?to=1761098907807&windowSize=600000"
+          }
+        },
+        {
+          "id": "63abbb71332456707939ee6e35b92cfd907b1cae",
+          "label": "xanderz-cd-reserve1-rook-ceph-rook-ceph-exporter",
+          "types": [],
+          "technologies": [],
+          "snapshotIds": [],
+          "entityType": "SERVICE",
+          "_links": {
+            "self": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=63abbb71332456707939ee6e35b92cfd907b1cae?to=1761098907807&windowSize=600000",
+            "endpoints": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=63abbb71332456707939ee6e35b92cfd907b1cae/endpoints?to=1761098907807&windowSize=600000"
+          }
+        },
+        {
+          "id": "a255bb826acb03a8c832556c02af289dc9961f2e",
+          "label": "xanderz-cd-reserve1-perf-ldap-ns-ldap",
+          "types": [],
+          "technologies": [],
+          "snapshotIds": [],
+          "entityType": "SERVICE",
+          "_links": {
+            "self": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=a255bb826acb03a8c832556c02af289dc9961f2e?to=1761098907807&windowSize=600000",
+            "endpoints": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=a255bb826acb03a8c832556c02af289dc9961f2e/endpoints?to=1761098907807&windowSize=600000"
+          }
+        },
+        {
+          "id": "d80023e2e39deccc37a5a9656717763ca5d35499",
+          "label": "xanderz-cd-reserve1-openshift-service-ca-operator-metrics",
+          "types": [],
+          "technologies": [],
+          "snapshotIds": [],
+          "entityType": "SERVICE",
+          "_links": {
+            "self": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=d80023e2e39deccc37a5a9656717763ca5d35499?to=1761098907807&windowSize=600000",
+            "endpoints": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=d80023e2e39deccc37a5a9656717763ca5d35499/endpoints?to=1761098907807&windowSize=600000"
+          }
+        },
+        {
+          "id": "55eb6b99542c70806d3543dbdd413795c94d494c",
+          "label": "xanderz-cd-reserve1-openshift-route-controller-manager-route-controller-manager",
+          "types": [],
+          "technologies": [],
+          "snapshotIds": [],
+          "entityType": "SERVICE",
+          "_links": {
+            "self": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=55eb6b99542c70806d3543dbdd413795c94d494c?to=1761098907807&windowSize=600000",
+            "endpoints": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=55eb6b99542c70806d3543dbdd413795c94d494c/endpoints?to=1761098907807&windowSize=600000"
+          }
+        },
+        {
+          "id": "40bcc81f89f491f81a26b929e8cdebdbbeb093da",
+          "label": "xanderz-cd-reserve1-openshift-ovn-kubernetes-ovn-kubernetes-node",
+          "types": [],
+          "technologies": [],
+          "snapshotIds": [],
+          "entityType": "SERVICE",
+          "_links": {
+            "self": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=40bcc81f89f491f81a26b929e8cdebdbbeb093da?to=1761098907807&windowSize=600000",
+            "endpoints": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=40bcc81f89f491f81a26b929e8cdebdbbeb093da/endpoints?to=1761098907807&windowSize=600000"
+          }
+        },
+        {
+          "id": "0ff56626f684d5528d4f7f4e471487875ff5b6dc",
+          "label": "xanderz-cd-reserve1-openshift-ovn-kubernetes-ovn-kubernetes-control-plane",
+          "types": [],
+          "technologies": [],
+          "snapshotIds": [],
+          "entityType": "SERVICE",
+          "_links": {
+            "self": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=0ff56626f684d5528d4f7f4e471487875ff5b6dc?to=1761098907807&windowSize=600000",
+            "endpoints": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=0ff56626f684d5528d4f7f4e471487875ff5b6dc/endpoints?to=1761098907807&windowSize=600000"
+          }
+        },
+        {
+          "id": "2d185e66e1cf8096fb5427441897a224f21038bf",
+          "label": "xanderz-cd-reserve1-openshift-operators-instana-agent-headless",
+          "types": [],
+          "technologies": [],
+          "snapshotIds": [],
+          "entityType": "SERVICE",
+          "_links": {
+            "self": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=2d185e66e1cf8096fb5427441897a224f21038bf?to=1761098907807&windowSize=600000",
+            "endpoints": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=2d185e66e1cf8096fb5427441897a224f21038bf/endpoints?to=1761098907807&windowSize=600000"
+          }
+        },
+        {
+          "id": "6dafd28e96fe9fcd7fdfe8019d75ec132001c72f",
+          "label": "xanderz-cd-reserve1-openshift-operators-instana-agent",
+          "types": [],
+          "technologies": [],
+          "snapshotIds": [],
+          "entityType": "SERVICE",
+          "_links": {
+            "self": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=6dafd28e96fe9fcd7fdfe8019d75ec132001c72f?to=1761098907807&windowSize=600000",
+            "endpoints": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=6dafd28e96fe9fcd7fdfe8019d75ec132001c72f/endpoints?to=1761098907807&windowSize=600000"
+          }
+        },
+        {
+          "id": "7ac1d5f1e5478d8f9572c5691b9d325ede6cb70b",
+          "label": "xanderz-cd-reserve1-openshift-operators-controller-manager-metrics-service",
+          "types": [],
+          "technologies": [],
+          "snapshotIds": [],
+          "entityType": "SERVICE",
+          "_links": {
+            "self": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=7ac1d5f1e5478d8f9572c5691b9d325ede6cb70b?to=1761098907807&windowSize=600000",
+            "endpoints": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=7ac1d5f1e5478d8f9572c5691b9d325ede6cb70b/endpoints?to=1761098907807&windowSize=600000"
+          }
+        },
+        {
+          "id": "fa8575a5e8d2234fc69dab398e485b97e3228c6b",
+          "label": "xanderz-cd-reserve1-openshift-operator-lifecycle-manager-packageserver-service",
+          "types": [],
+          "technologies": [],
+          "snapshotIds": [],
+          "entityType": "SERVICE",
+          "_links": {
+            "self": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=fa8575a5e8d2234fc69dab398e485b97e3228c6b?to=1761098907807&windowSize=600000",
+            "endpoints": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=fa8575a5e8d2234fc69dab398e485b97e3228c6b/endpoints?to=1761098907807&windowSize=600000"
+          }
+        },
+        {
+          "id": "313e7ec335354da2537025c0cbab8c0aa9989d1b",
+          "label": "xanderz-cd-reserve1-openshift-operator-lifecycle-manager-package-server-manager-metrics",
+          "types": [],
+          "technologies": [],
+          "snapshotIds": [],
+          "entityType": "SERVICE",
+          "_links": {
+            "self": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=313e7ec335354da2537025c0cbab8c0aa9989d1b?to=1761098907807&windowSize=600000",
+            "endpoints": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=313e7ec335354da2537025c0cbab8c0aa9989d1b/endpoints?to=1761098907807&windowSize=600000"
+          }
+        },
+        {
+          "id": "4fd0e66167051d74d724a93d779aa3e40e107b70",
+          "label": "xanderz-cd-reserve1-openshift-operator-lifecycle-manager-olm-operator-metrics",
+          "types": [],
+          "technologies": [],
+          "snapshotIds": [],
+          "entityType": "SERVICE",
+          "_links": {
+            "self": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=4fd0e66167051d74d724a93d779aa3e40e107b70?to=1761098907807&windowSize=600000",
+            "endpoints": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=4fd0e66167051d74d724a93d779aa3e40e107b70/endpoints?to=1761098907807&windowSize=600000"
+          }
+        },
+        {
+          "id": "ee60791c868ab49ccc8f53ee866d77bb3d01f455",
+          "label": "xanderz-cd-reserve1-openshift-operator-lifecycle-manager-catalog-operator-metrics",
+          "types": [],
+          "technologies": [],
+          "snapshotIds": [],
+          "entityType": "SERVICE",
+          "_links": {
+            "self": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=ee60791c868ab49ccc8f53ee866d77bb3d01f455?to=1761098907807&windowSize=600000",
+            "endpoints": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=ee60791c868ab49ccc8f53ee866d77bb3d01f455/endpoints?to=1761098907807&windowSize=600000"
+          }
+        },
+        {
+          "id": "a773328f3fb27e0a49460f7fd7e1203cf499175c",
+          "label": "xanderz-cd-reserve1-openshift-operator-controller-operator-controller-service",
+          "types": [],
+          "technologies": [],
+          "snapshotIds": [],
+          "entityType": "SERVICE",
+          "_links": {
+            "self": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=a773328f3fb27e0a49460f7fd7e1203cf499175c?to=1761098907807&windowSize=600000",
+            "endpoints": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=a773328f3fb27e0a49460f7fd7e1203cf499175c/endpoints?to=1761098907807&windowSize=600000"
+          }
+        },
+        {
+          "id": "c1e55da6f14778ae3e9dc67c9b89094cf965d21e",
+          "label": "xanderz-cd-reserve1-openshift-oauth-apiserver-api",
+          "types": [],
+          "technologies": [],
+          "snapshotIds": [],
+          "entityType": "SERVICE",
+          "_links": {
+            "self": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=c1e55da6f14778ae3e9dc67c9b89094cf965d21e?to=1761098907807&windowSize=600000",
+            "endpoints": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=c1e55da6f14778ae3e9dc67c9b89094cf965d21e/endpoints?to=1761098907807&windowSize=600000"
+          }
+        },
+        {
+          "id": "a50ec6720bf37f627199ba36bab8ac3d5a1657be",
+          "label": "xanderz-cd-reserve1-openshift-network-operator-metrics",
+          "types": [],
+          "technologies": [],
+          "snapshotIds": [],
+          "entityType": "SERVICE",
+          "_links": {
+            "self": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=a50ec6720bf37f627199ba36bab8ac3d5a1657be?to=1761098907807&windowSize=600000",
+            "endpoints": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=a50ec6720bf37f627199ba36bab8ac3d5a1657be/endpoints?to=1761098907807&windowSize=600000"
+          }
+        },
+        {
+          "id": "7a752fb63cf0e56945485c10d1b3e200d1753e32",
+          "label": "xanderz-cd-reserve1-openshift-network-diagnostics-network-check-target",
+          "types": [],
+          "technologies": [],
+          "snapshotIds": [],
+          "entityType": "SERVICE",
+          "_links": {
+            "self": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=7a752fb63cf0e56945485c10d1b3e200d1753e32?to=1761098907807&windowSize=600000",
+            "endpoints": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=7a752fb63cf0e56945485c10d1b3e200d1753e32/endpoints?to=1761098907807&windowSize=600000"
+          }
+        },
+        {
+          "id": "6870d6c85ee510e90f658d69c8235921c827ea46",
+          "label": "xanderz-cd-reserve1-openshift-network-diagnostics-network-check-source",
+          "types": [],
+          "technologies": [],
+          "snapshotIds": [],
+          "entityType": "SERVICE",
+          "_links": {
+            "self": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=6870d6c85ee510e90f658d69c8235921c827ea46?to=1761098907807&windowSize=600000",
+            "endpoints": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=6870d6c85ee510e90f658d69c8235921c827ea46/endpoints?to=1761098907807&windowSize=600000"
+          }
+        },
+        {
+          "id": "4c44784c62af2071cbc331376dbd4187cc4b340f",
+          "label": "xanderz-cd-reserve1-openshift-network-console-networking-console-plugin",
+          "types": [],
+          "technologies": [],
+          "snapshotIds": [],
+          "entityType": "SERVICE",
+          "_links": {
+            "self": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=4c44784c62af2071cbc331376dbd4187cc4b340f?to=1761098907807&windowSize=600000",
+            "endpoints": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=4c44784c62af2071cbc331376dbd4187cc4b340f/endpoints?to=1761098907807&windowSize=600000"
+          }
+        },
+        {
+          "id": "4e7883b227b85e21ad36f85422aac4efab499774",
+          "label": "xanderz-cd-reserve1-openshift-multus-network-metrics-service",
+          "types": [],
+          "technologies": [],
+          "snapshotIds": [],
+          "entityType": "SERVICE",
+          "_links": {
+            "self": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=4e7883b227b85e21ad36f85422aac4efab499774?to=1761098907807&windowSize=600000",
+            "endpoints": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=4e7883b227b85e21ad36f85422aac4efab499774/endpoints?to=1761098907807&windowSize=600000"
+          }
+        },
+        {
+          "id": "2ec4f3826ed61a7c2d51af06b195aa4b3270f246",
+          "label": "xanderz-cd-reserve1-openshift-multus-multus-admission-controller",
+          "types": [],
+          "technologies": [],
+          "snapshotIds": [],
+          "entityType": "SERVICE",
+          "_links": {
+            "self": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=2ec4f3826ed61a7c2d51af06b195aa4b3270f246?to=1761098907807&windowSize=600000",
+            "endpoints": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=2ec4f3826ed61a7c2d51af06b195aa4b3270f246/endpoints?to=1761098907807&windowSize=600000"
+          }
+        },
+        {
+          "id": "a3616559b56b9fcde717f4698e8771884ba0ddae",
+          "label": "xanderz-cd-reserve1-openshift-monitoring-thanos-querier",
+          "types": [],
+          "technologies": [],
+          "snapshotIds": [],
+          "entityType": "SERVICE",
+          "_links": {
+            "self": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=a3616559b56b9fcde717f4698e8771884ba0ddae?to=1761098907807&windowSize=600000",
+            "endpoints": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=a3616559b56b9fcde717f4698e8771884ba0ddae/endpoints?to=1761098907807&windowSize=600000"
+          }
+        },
+        {
+          "id": "4d37115d45f9c5ccd486c3dced2c7c3a0ded123a",
+          "label": "xanderz-cd-reserve1-openshift-monitoring-prometheus-operator-admission-webhook",
+          "types": [],
+          "technologies": [],
+          "snapshotIds": [],
+          "entityType": "SERVICE",
+          "_links": {
+            "self": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=4d37115d45f9c5ccd486c3dced2c7c3a0ded123a?to=1761098907807&windowSize=600000",
+            "endpoints": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=4d37115d45f9c5ccd486c3dced2c7c3a0ded123a/endpoints?to=1761098907807&windowSize=600000"
+          }
+        },
+        {
+          "id": "e0e9dc15a9a2636813634ff800c77c1e9d07b060",
+          "label": "xanderz-cd-reserve1-openshift-monitoring-prometheus-operator",
+          "types": [],
+          "technologies": [],
+          "snapshotIds": [],
+          "entityType": "SERVICE",
+          "_links": {
+            "self": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=e0e9dc15a9a2636813634ff800c77c1e9d07b060?to=1761098907807&windowSize=600000",
+            "endpoints": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=e0e9dc15a9a2636813634ff800c77c1e9d07b060/endpoints?to=1761098907807&windowSize=600000"
+          }
+        },
+        {
+          "id": "dafcba4ed7342ee7bf9e7c00dde7564e4a332e4a",
+          "label": "xanderz-cd-reserve1-openshift-monitoring-prometheus-operated",
+          "types": [],
+          "technologies": [],
+          "snapshotIds": [],
+          "entityType": "SERVICE",
+          "_links": {
+            "self": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=dafcba4ed7342ee7bf9e7c00dde7564e4a332e4a?to=1761098907807&windowSize=600000",
+            "endpoints": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services;id=dafcba4ed7342ee7bf9e7c00dde7564e4a332e4a/endpoints?to=1761098907807&windowSize=600000"
+          }
+        }
+      ],
+      "page": 1,
+      "pageSize": 50,
+      "totalHits": 7916,
+      "adjustedTimeframe": {
+        "windowSize": 590000,
+        "to": 1761098900000
+      },
+      "_links": {
+        "self": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services?to=1761098907807&windowSize=600000&page=1&pageSize=50",
+        "next": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/applications/services?to=1761098907807&windowSize=600000&page=2&pageSize=50"
+      }
+    }
+  },
+  "/api/application-monitoring/metrics": {
+    "url": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/metrics",
+    "status_code": 404,
+    "body": {
+      "code": 404,
+      "message": "HTTP 404 Not Found"
+    }
+  },
+  "/api/application-monitoring/spans": {
+    "url": "https://ibmdevsandbox-instanaibm.instana.io/api/application-monitoring/spans",
+    "status_code": 404,
+    "body": {
+      "code": 404,
+      "message": "HTTP 404 Not Found"
+    }
+  },
+  "/api/endpoints": {
+    "url": "https://ibmdevsandbox-instanaibm.instana.io/api/endpoints",
+    "status_code": 404,
+    "body": {
+      "code": 404,
+      "message": "HTTP 404 Not Found"
+    }
+  },
+  "/api/v1/endpoints": {
+    "url": "https://ibmdevsandbox-instanaibm.instana.io/api/v1/endpoints",
+    "status_code": 404,
+    "body": {
+      "code": 404,
+      "message": "HTTP 404 Not Found"
+    }
+  },
+  "/api/v1/services": {
+    "url": "https://ibmdevsandbox-instanaibm.instana.io/api/v1/services",
+    "status_code": 404,
+    "body": {
+      "code": 404,
+      "message": "HTTP 404 Not Found"
+    }
+  },
+  "/api/v1/applications": {
+    "url": "https://ibmdevsandbox-instanaibm.instana.io/api/v1/applications",
+    "status_code": 404,
+    "body": {
+      "code": 404,
+      "message": "HTTP 404 Not Found"
+    }
+  },
+  "/api/v1/hosts": {
+    "url": "https://ibmdevsandbox-instanaibm.instana.io/api/v1/hosts",
+    "status_code": 404,
+    "body": {
+      "code": 404,
+      "message": "HTTP 404 Not Found"
+    }
+  },
+  "/api/v2/endpoints": {
+    "url": "https://ibmdevsandbox-instanaibm.instana.io/api/v2/endpoints",
+    "status_code": 404,
+    "body": {
+      "code": 404,
+      "message": "HTTP 404 Not Found"
+    }
+  },
+  "/api/v2/services": {
+    "url": "https://ibmdevsandbox-instanaibm.instana.io/api/v2/services",
+    "status_code": 404,
+    "body": {
+      "code": 404,
+      "message": "HTTP 404 Not Found"
+    }
+  },
+  "/api/v2/applications": {
+    "url": "https://ibmdevsandbox-instanaibm.instana.io/api/v2/applications",
+    "status_code": 404,
+    "body": {
+      "code": 404,
+      "message": "HTTP 404 Not Found"
+    }
+  },
+  "/api": {
+    "url": "https://ibmdevsandbox-instanaibm.instana.io/api",
+    "status_code": 404,
+    "body": {
+      "code": 404,
+      "message": "HTTP 404 Not Found"
+    }
+  },
+  "/api/status": {
+    "url": "https://ibmdevsandbox-instanaibm.instana.io/api/status",
+    "status_code": 404,
+    "body": {
+      "code": 404,
+      "message": "HTTP 404 Not Found"
+    }
+  }
+}
