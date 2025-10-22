@@ -9,8 +9,7 @@
           "--header", "instana-api-token: 2i3NmdixRrKdV8CdQMTw-Q"
         ],
         "env": {
-          "PATH": "/usr/local/bin:/bin:/usr/bin,/Users/valerykornienko/.nvm/versions/node/v22.4.1/bin",
-          "SHELL": "/bin/zsh"
+              "SHELL": "/bin/zsh"
         }
       }
     }
