@@ -1,0 +1,42 @@
+[
+  {
+    "snapshotId": "EWG7PNt14MedRhXqQp91PlVEHjA",
+    "label": "AMQ.68F7A87C217A7502"
+  },
+  {
+    "snapshotId": "S7XCL8z5Uyn5Q3fOrs06A3gSLlA",
+    "label": "STORE.QUEUE"
+  },
+  {
+    "snapshotId": "tkx2i9H7EikwPD2Srnd6MoEL3nM",
+    "label": "SYSTEM.BROKER.AUTH"
+  },
+  {
+    "snapshotId": "c8oHyYfCOUn9qK18m0T9wcCrVXs",
+    "label": "SYSTEM.HIERARCHY.STATE"
+  },
+  {
+    "snapshotId": "eazpXqMO22GuUw7OlZFWHaM5v9U",
+    "label": "SYSTEM.DEFAULT.LOCAL.QUEUE"
+  },
+  {
+    "snapshotId": "uD696Hm7GoT2Dx07RFA45iwLZhY",
+    "label": "SYSTEM.BROKER.CONTROL.QUEUE"
+  },
+  {
+    "snapshotId": "DPVkb1-HLw4-ToMr2Q_B5LCYe0o",
+    "label": "SYSTEM.DEFAULT.LOCAL.QUEUE"
+  },
+  {
+    "snapshotId": "huQ5jlZQheHqYndtB6CWy_9s1TU",
+    "label": "SYSTEM.BROKER.ADAPTER.PROCESSED"
+  },
+  {
+    "snapshotId": "TKnO949PQMSTAY45D0OK7XZO9yc",
+    "label": "SYSTEM.BROKER.CONTROL.QUEUE"
+  },
+  {
+    "snapshotId": "X9IMK3o6J4614P2IiFI6TXPDgm4",
+    "label": "SYSTEM.ADMIN.ACTIVITY.QUEUE"
+  }
+]

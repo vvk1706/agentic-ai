@@ -1,0 +1,4 @@
+{"message":"Found 1999 snapshot(s)","total_found":1999,"snapshots":[
+{"id":"pod-1","label":"nginx-abc-123","snapshotId":"nginx-abc-123"},
+{"id":"pod-2","label":"redis-xyz-456","snapshotId":"redis-xyz-456"}
+]}
