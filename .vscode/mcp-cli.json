@@ -1,0 +1,13 @@
+{
+  "servers": {
+    "Instana MCP Server": {
+      "command": "mcp-instana",
+      "args": ["--transport", "stdio"],
+      "env": {
+        "INSTANA_BASE_URL": "https://ibmdevsandbox-instanaibm.instana.io",
+        "INSTANA_API_TOKEN": "2i3NmdixRrKdV8CdQMTw-Q"
+      }
+    }
+  }
+  
+}

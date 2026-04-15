@@ -1,0 +1,4 @@
+{"message":"Found 2000 snapshot(s)","total_found":2000,"snapshots":[
+{"id":"snap-1","label":"kube-system","snapshotId":"kube-system"},
+{"id":"snap-2","label":"default","snapshotId":"default"}
+]}

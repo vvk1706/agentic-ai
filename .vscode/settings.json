@@ -1,0 +1,10 @@
+{
+    "chat.mcp.gallery.enabled": true,
+    "chat.mcp.serverSampling": {
+        "agentic-ai/.vscode/mcp.json: Instana MCP Server": {
+            "allowedModels": [
+                "copilot/gpt-4.1"
+            ]
+        }
+    }
+}

@@ -1,0 +1,1017 @@
+{
+  "rbacTags": [],
+  "accessRules": [
+    {
+      "accessType": "READ_WRITE",
+      "relationType": "USER",
+      "relatedId": "64701bfb8cdbbc00013771d5"
+    },
+    {
+      "accessType": "READ",
+      "relationType": "GLOBAL",
+      "relatedId": ""
+    }
+  ],
+  "id": "30UrzmnxRcmDhrsQFl9YUg",
+  "title": "vvk17-MQ-Test-Dashboard",
+  "widgets": [
+    {
+      "width": 6,
+      "x": 5,
+      "y": 0,
+      "id": "aaDyaLbc9MAveuj0",
+      "title": "Subscriptions",
+      "type": "table",
+      "config": {
+        "showGroupsWithMissingTags": false,
+        "tagFilterExpression": {
+          "logicalOperator": "AND",
+          "elements": [],
+          "type": "EXPRESSION"
+        },
+        "entityType": "ibmMqSubscription",
+        "sorting": {
+          "by": "label",
+          "direction": "ASC"
+        },
+        "tableSize": 5,
+        "countGroup": true,
+        "source": "INFRASTRUCTURE_METRICS",
+        "datasets": {
+          "metrics": [
+            {
+              "lastValue": false,
+              "color": "",
+              "compareToTimeShifted": false,
+              "threshold": {
+                "critical": "",
+                "warning": "",
+                "thresholdEnabled": false,
+                "operator": ">="
+              },
+              "aggregation": "MEAN",
+              "label": "",
+              "source": "INFRASTRUCTURE_METRICS",
+              "type": "ibmMqSubscription",
+              "metricPath": [
+                "numberMessages"
+              ],
+              "required": false,
+              "formatter": "number.compact",
+              "unit": "number",
+              "metric": "numberMessages",
+              "timeShift": 0,
+              "tagFilterExpression": {
+                "logicalOperator": "AND",
+                "elements": [],
+                "type": "EXPRESSION"
+              },
+              "allowedCrossSeriesAggregations": [],
+              "metricLabel": "Number of messages",
+              "crossSeriesAggregation": "MEAN"
+            },
+            {
+              "lastValue": false,
+              "color": "",
+              "compareToTimeShifted": false,
+              "threshold": {
+                "critical": "",
+                "warning": "",
+                "thresholdEnabled": false,
+                "operator": ">="
+              },
+              "aggregation": "MEAN",
+              "label": "",
+              "source": "INFRASTRUCTURE_METRICS",
+              "type": "ibmMqSubscription",
+              "metricPath": [
+                "Others"
+              ],
+              "required": false,
+              "formatter": "number.compact",
+              "unit": "number",
+              "metric": "count",
+              "timeShift": 0,
+              "tagFilterExpression": {
+                "logicalOperator": "AND",
+                "elements": [],
+                "type": "EXPRESSION"
+              },
+              "allowedCrossSeriesAggregations": [
+                "DISTINCT_COUNT"
+              ],
+              "metricLabel": "Count",
+              "crossSeriesAggregation": "DISTINCT_COUNT"
+            }
+          ]
+        },
+        "grouping": []
+      },
+      "height": 21
+    },
+    {
+      "width": 10,
+      "x": 0,
+      "y": 46,
+      "id": "DywR0iykut12_cTv",
+      "title": "QMGR Events ",
+      "type": "table",
+      "config": {
+        "showGroupsWithMissingTags": false,
+        "tagFilterExpression": {
+          "logicalOperator": "AND",
+          "elements": [],
+          "type": "EXPRESSION"
+        },
+        "entityType": "ibmMqQueueManager",
+        "sorting": {
+          "by": "label",
+          "direction": "ASC"
+        },
+        "tableSize": 5,
+        "countGroup": true,
+        "source": "INFRASTRUCTURE_METRICS",
+        "datasets": {
+          "metrics": [
+            {
+              "lastValue": false,
+              "color": "",
+              "compareToTimeShifted": false,
+              "threshold": {
+                "critical": "40",
+                "warning": "38",
+                "thresholdEnabled": true,
+                "operator": ">="
+              },
+              "aggregation": "MEAN",
+              "label": "",
+              "source": "INFRASTRUCTURE_METRICS",
+              "type": "ibmMqQueueManager",
+              "metricPath": [],
+              "required": false,
+              "formatter": "number.compact",
+              "unit": "number",
+              "metric": "connectionCount",
+              "timeShift": 0,
+              "tagFilterExpression": {
+                "logicalOperator": "AND",
+                "elements": [],
+                "type": "EXPRESSION"
+              },
+              "allowedCrossSeriesAggregations": [],
+              "metricLabel": "Connection count",
+              "crossSeriesAggregation": "MEAN"
+            },
+            {
+              "lastValue": false,
+              "color": "",
+              "compareToTimeShifted": false,
+              "threshold": {
+                "critical": "0",
+                "warning": "",
+                "thresholdEnabled": true,
+                "operator": "<="
+              },
+              "aggregation": "MEAN",
+              "label": "",
+              "source": "INFRASTRUCTURE_METRICS",
+              "type": "ibmMqQueueManager",
+              "metricPath": [],
+              "required": false,
+              "formatter": "number.compact",
+              "unit": "number",
+              "metric": "messagesIn",
+              "timeShift": 0,
+              "tagFilterExpression": {
+                "logicalOperator": "AND",
+                "elements": [],
+                "type": "EXPRESSION"
+              },
+              "allowedCrossSeriesAggregations": [],
+              "metricLabel": "Messages In",
+              "crossSeriesAggregation": "MEAN"
+            },
+            {
+              "lastValue": false,
+              "color": "",
+              "compareToTimeShifted": false,
+              "threshold": {
+                "critical": "",
+                "warning": "",
+                "thresholdEnabled": false,
+                "operator": ">="
+              },
+              "aggregation": "MEAN",
+              "label": "",
+              "source": "INFRASTRUCTURE_METRICS",
+              "type": "ibmMqQueueManager",
+              "metricPath": [],
+              "required": false,
+              "formatter": "percentagePlain.detailed",
+              "unit": "percentage100",
+              "metric": "mqiFailures",
+              "timeShift": 0,
+              "tagFilterExpression": {
+                "logicalOperator": "AND",
+                "elements": [],
+                "type": "EXPRESSION"
+              },
+              "allowedCrossSeriesAggregations": [],
+              "metricLabel": "MQI Failures",
+              "crossSeriesAggregation": "MEAN"
+            },
+            {
+              "lastValue": true,
+              "color": "",
+              "compareToTimeShifted": false,
+              "threshold": {
+                "critical": "",
+                "warning": "",
+                "thresholdEnabled": false,
+                "operator": ">="
+              },
+              "aggregation": "MEAN",
+              "label": "Chnl status avg",
+              "source": "INFRASTRUCTURE_METRICS",
+              "type": "ibmMqQueueManager",
+              "metricPath": [],
+              "required": false,
+              "formatter": "number.compact",
+              "unit": "number",
+              "metric": "clusterStatusMetric",
+              "timeShift": 0,
+              "tagFilterExpression": {
+                "logicalOperator": "AND",
+                "elements": [],
+                "type": "EXPRESSION"
+              },
+              "allowedCrossSeriesAggregations": [],
+              "metricLabel": "Cluster status metrics",
+              "crossSeriesAggregation": "MEAN"
+            },
+            {
+              "lastValue": false,
+              "color": "",
+              "compareToTimeShifted": false,
+              "threshold": {
+                "critical": "",
+                "warning": "",
+                "thresholdEnabled": false,
+                "operator": ">="
+              },
+              "aggregation": "MEAN",
+              "label": "",
+              "source": "INFRASTRUCTURE_METRICS",
+              "type": "ibmMqQueueManager",
+              "metricPath": [],
+              "required": false,
+              "formatter": "number.compact",
+              "unit": "number",
+              "metric": "pubsubStatus",
+              "timeShift": 0,
+              "tagFilterExpression": {
+                "logicalOperator": "AND",
+                "elements": [],
+                "type": "EXPRESSION"
+              },
+              "allowedCrossSeriesAggregations": [],
+              "metricLabel": "Pubsub status metric",
+              "crossSeriesAggregation": "MEAN"
+            }
+          ]
+        },
+        "grouping": []
+      },
+      "height": 18
+    },
+    {
+      "width": 5,
+      "x": 0,
+      "y": 0,
+      "id": "0TXnaSD1ykEuRO41",
+      "title": "QM1@10.254.15.89 status metrics",
+      "type": "chart",
+      "config": {
+        "shareMaxAxisDomain": false,
+        "y1": {
+          "formatter": "number.detailed",
+          "renderer": "line",
+          "metrics": [
+            {
+              "lastValue": false,
+              "color": "",
+              "compareToTimeShifted": false,
+              "threshold": {
+                "critical": "",
+                "warning": "",
+                "thresholdEnabled": false,
+                "operator": ">="
+              },
+              "aggregation": "MAX",
+              "label": "",
+              "source": "INFRASTRUCTURE_METRICS",
+              "type": "ibmMqQueueManager",
+              "metricPath": [
+                "IBM MQ",
+                "IBM MQ Queue Manager"
+              ],
+              "formatter": "number.compact",
+              "unit": "number",
+              "metric": "messagesIn",
+              "timeShift": 0,
+              "tagFilterExpression": {
+                "logicalOperator": "AND",
+                "elements": [],
+                "type": "EXPRESSION"
+              },
+              "allowedCrossSeriesAggregations": [],
+              "metricLabel": "Messages In",
+              "crossSeriesAggregation": "SUM"
+            },
+            {
+              "lastValue": false,
+              "color": "",
+              "compareToTimeShifted": false,
+              "threshold": {
+                "critical": "",
+                "warning": "",
+                "thresholdEnabled": false,
+                "operator": ">="
+              },
+              "aggregation": "MAX",
+              "label": "",
+              "source": "INFRASTRUCTURE_METRICS",
+              "type": "ibmMqQueueManager",
+              "metricPath": [
+                "IBM MQ",
+                "IBM MQ Queue Manager"
+              ],
+              "formatter": "number.compact",
+              "unit": "number",
+              "metric": "connectionCount",
+              "timeShift": 0,
+              "tagFilterExpression": {
+                "logicalOperator": "AND",
+                "elements": [],
+                "type": "EXPRESSION"
+              },
+              "allowedCrossSeriesAggregations": [],
+              "metricLabel": "Connection count",
+              "crossSeriesAggregation": "SUM"
+            },
+            {
+              "lastValue": false,
+              "color": "",
+              "compareToTimeShifted": false,
+              "threshold": {
+                "critical": "",
+                "warning": "",
+                "thresholdEnabled": false,
+                "operator": ">="
+              },
+              "aggregation": "MAX",
+              "label": "",
+              "source": "INFRASTRUCTURE_METRICS",
+              "type": "ibmMqQueueManager",
+              "metricPath": [
+                "IBM MQ",
+                "IBM MQ Queue Manager"
+              ],
+              "formatter": "number.compact",
+              "unit": "number",
+              "metric": "messagesOut",
+              "timeShift": 0,
+              "tagFilterExpression": {
+                "logicalOperator": "AND",
+                "elements": [],
+                "type": "EXPRESSION"
+              },
+              "allowedCrossSeriesAggregations": [],
+              "metricLabel": "Messages Out",
+              "crossSeriesAggregation": "SUM"
+            },
+            {
+              "lastValue": false,
+              "color": "",
+              "compareToTimeShifted": false,
+              "threshold": {
+                "critical": "",
+                "warning": "",
+                "thresholdEnabled": false,
+                "operator": ">="
+              },
+              "aggregation": "MAX",
+              "label": "",
+              "source": "INFRASTRUCTURE_METRICS",
+              "type": "ibmMqChannel",
+              "metricPath": [
+                "IBM MQ",
+                "IBM MQ Channel",
+                "Others"
+              ],
+              "formatter": "number.compact",
+              "unit": "number",
+              "metric": "count",
+              "timeShift": 0,
+              "tagFilterExpression": {
+                "logicalOperator": "AND",
+                "elements": [],
+                "type": "EXPRESSION"
+              },
+              "allowedCrossSeriesAggregations": [
+                "DISTINCT_COUNT"
+              ],
+              "metricLabel": "Count",
+              "crossSeriesAggregation": "DISTINCT_COUNT"
+            },
+            {
+              "lastValue": false,
+              "color": "",
+              "compareToTimeShifted": false,
+              "threshold": {
+                "critical": "",
+                "warning": "",
+                "thresholdEnabled": false,
+                "operator": ">="
+              },
+              "aggregation": "MAX",
+              "label": "",
+              "source": "INFRASTRUCTURE_METRICS",
+              "type": "ibmMqChannel",
+              "metricPath": [
+                "IBM MQ",
+                "IBM MQ Channel",
+                "Active Conversations"
+              ],
+              "formatter": "number.compact",
+              "unit": "number",
+              "metric": "activeConversations",
+              "timeShift": 0,
+              "tagFilterExpression": {
+                "logicalOperator": "AND",
+                "elements": [],
+                "type": "EXPRESSION"
+              },
+              "allowedCrossSeriesAggregations": [],
+              "metricLabel": "Channel active conversations",
+              "crossSeriesAggregation": "SUM"
+            },
+            {
+              "lastValue": false,
+              "color": "",
+              "compareToTimeShifted": false,
+              "threshold": {
+                "critical": "",
+                "warning": "",
+                "thresholdEnabled": false,
+                "operator": ">="
+              },
+              "aggregation": "MEAN",
+              "label": "",
+              "source": "INFRASTRUCTURE_METRICS",
+              "type": "ibmMqChannel",
+              "metricPath": [
+                "IBM MQ",
+                "IBM MQ Channel",
+                "Others"
+              ],
+              "formatter": "number.compact",
+              "unit": "number",
+              "metric": "channelStatusMetric",
+              "timeShift": 0,
+              "tagFilterExpression": {
+                "logicalOperator": "AND",
+                "elements": [],
+                "type": "EXPRESSION"
+              },
+              "allowedCrossSeriesAggregations": [],
+              "metricLabel": "Channel status metric",
+              "crossSeriesAggregation": "MEAN"
+            }
+          ],
+          "formatterSelected": false
+        },
+        "y2": {
+          "formatter": "number.detailed",
+          "renderer": "line",
+          "metrics": []
+        },
+        "type": "TIME_SERIES"
+      },
+      "height": 21
+    },
+    {
+      "width": 8,
+      "x": 0,
+      "y": 21,
+      "id": "6Ag0hBI1c6rEBh-_",
+      "title": "Channel Events ",
+      "type": "table",
+      "config": {
+        "showGroupsWithMissingTags": false,
+        "tagFilterExpression": {
+          "logicalOperator": "AND",
+          "elements": [],
+          "type": "EXPRESSION"
+        },
+        "entityType": "ibmMqChannel",
+        "sorting": {
+          "by": "label",
+          "direction": "ASC"
+        },
+        "tableSize": 5,
+        "countGroup": true,
+        "source": "INFRASTRUCTURE_METRICS",
+        "datasets": {
+          "metrics": [
+            {
+              "lastValue": false,
+              "color": "",
+              "compareToTimeShifted": false,
+              "threshold": {
+                "critical": "",
+                "warning": "",
+                "thresholdEnabled": false,
+                "operator": ">="
+              },
+              "aggregation": "MEAN",
+              "label": "",
+              "source": "INFRASTRUCTURE_METRICS",
+              "type": "ibmMqChannel",
+              "metricPath": [
+                "Active Conversations"
+              ],
+              "required": false,
+              "formatter": "number.compact",
+              "unit": "number",
+              "metric": "activeConversations",
+              "timeShift": 0,
+              "tagFilterExpression": {
+                "logicalOperator": "AND",
+                "elements": [],
+                "type": "EXPRESSION"
+              },
+              "allowedCrossSeriesAggregations": [],
+              "metricLabel": "Channel active conversations",
+              "crossSeriesAggregation": "MEAN"
+            },
+            {
+              "lastValue": false,
+              "color": "",
+              "compareToTimeShifted": false,
+              "threshold": {
+                "critical": "",
+                "warning": "",
+                "thresholdEnabled": false,
+                "operator": ">="
+              },
+              "aggregation": "MEAN",
+              "label": "",
+              "source": "INFRASTRUCTURE_METRICS",
+              "type": "ibmMqChannel",
+              "metricPath": [
+                "Others"
+              ],
+              "required": false,
+              "formatter": "number.compact",
+              "unit": "number",
+              "metric": "channelStatusMetric",
+              "timeShift": 0,
+              "tagFilterExpression": {
+                "logicalOperator": "AND",
+                "elements": [],
+                "type": "EXPRESSION"
+              },
+              "allowedCrossSeriesAggregations": [],
+              "metricLabel": "Channel status metric",
+              "crossSeriesAggregation": "MEAN"
+            },
+            {
+              "lastValue": false,
+              "color": "",
+              "compareToTimeShifted": false,
+              "threshold": {
+                "critical": "",
+                "warning": "",
+                "thresholdEnabled": false,
+                "operator": ">="
+              },
+              "aggregation": "MEAN",
+              "label": "",
+              "source": "INFRASTRUCTURE_METRICS",
+              "type": "ibmMqChannel",
+              "metricPath": [
+                "Others"
+              ],
+              "required": false,
+              "formatter": "number.compact",
+              "unit": "number",
+              "metric": "count",
+              "timeShift": 0,
+              "tagFilterExpression": {
+                "logicalOperator": "AND",
+                "elements": [],
+                "type": "EXPRESSION"
+              },
+              "allowedCrossSeriesAggregations": [
+                "DISTINCT_COUNT"
+              ],
+              "metricLabel": "Count",
+              "crossSeriesAggregation": "DISTINCT_COUNT"
+            },
+            {
+              "lastValue": false,
+              "color": "",
+              "compareToTimeShifted": false,
+              "threshold": {
+                "critical": "",
+                "warning": "",
+                "thresholdEnabled": false,
+                "operator": ">="
+              },
+              "aggregation": "MEAN",
+              "label": "",
+              "source": "INFRASTRUCTURE_METRICS",
+              "type": "ibmMqChannel",
+              "metricPath": [
+                "Others"
+              ],
+              "required": false,
+              "formatter": "number.compact",
+              "unit": "number",
+              "metric": "channelInDoubtMetric",
+              "timeShift": 0,
+              "tagFilterExpression": {
+                "logicalOperator": "AND",
+                "elements": [],
+                "type": "EXPRESSION"
+              },
+              "allowedCrossSeriesAggregations": [],
+              "metricLabel": "Channel in-doubt",
+              "crossSeriesAggregation": "MEAN"
+            },
+            {
+              "lastValue": false,
+              "color": "",
+              "compareToTimeShifted": false,
+              "threshold": {
+                "critical": "",
+                "warning": "",
+                "thresholdEnabled": false,
+                "operator": ">="
+              },
+              "aggregation": "MEAN",
+              "label": "",
+              "source": "INFRASTRUCTURE_METRICS",
+              "type": "ibmMqChannel",
+              "metricPath": [
+                "Messages"
+              ],
+              "required": false,
+              "formatter": "number.compact",
+              "unit": "number",
+              "metric": "messagesSent",
+              "timeShift": 0,
+              "tagFilterExpression": {
+                "logicalOperator": "AND",
+                "elements": [],
+                "type": "EXPRESSION"
+              },
+              "allowedCrossSeriesAggregations": [],
+              "metricLabel": "Messages sent",
+              "crossSeriesAggregation": "MEAN"
+            }
+          ]
+        },
+        "grouping": []
+      },
+      "height": 25
+    },
+    {
+      "width": 5,
+      "x": 5,
+      "y": 64,
+      "id": "IX2TOY-PRLxmaeSP",
+      "title": "QM1@acemq1 status metrics",
+      "type": "chart",
+      "config": {
+        "shareMaxAxisDomain": false,
+        "y1": {
+          "formatter": "number.detailed",
+          "renderer": "line",
+          "metrics": [
+            {
+              "lastValue": false,
+              "color": "",
+              "compareToTimeShifted": false,
+              "threshold": {
+                "critical": "",
+                "warning": "",
+                "thresholdEnabled": false,
+                "operator": ">="
+              },
+              "aggregation": "MAX",
+              "label": "",
+              "source": "INFRASTRUCTURE_METRICS",
+              "type": "ibmMqQueueManager",
+              "metricPath": [
+                "IBM MQ",
+                "IBM MQ Queue Manager"
+              ],
+              "formatter": "number.compact",
+              "unit": "number",
+              "metric": "messagesIn",
+              "timeShift": 0,
+              "tagFilterExpression": {
+                "tagDefinition": {
+                  "path": [
+                    {
+                      "label": "Messaging"
+                    },
+                    {
+                      "label": "IBM MQ"
+                    },
+                    {
+                      "label": "ibmmq.queuemanager.name"
+                    }
+                  ],
+                  "name": "ibmmq.queuemanager.name",
+                  "availability": [],
+                  "type": "STRING"
+                },
+                "name": "ibmmq.queuemanager.name",
+                "type": "TAG_FILTER",
+                "value": "QM1@acemq1",
+                "entity": "NOT_APPLICABLE",
+                "operator": "EQUALS"
+              },
+              "allowedCrossSeriesAggregations": [],
+              "metricLabel": "Messages In",
+              "crossSeriesAggregation": "SUM"
+            },
+            {
+              "lastValue": false,
+              "color": "",
+              "compareToTimeShifted": false,
+              "threshold": {
+                "critical": "",
+                "warning": "",
+                "thresholdEnabled": false,
+                "operator": ">="
+              },
+              "aggregation": "MAX",
+              "label": "",
+              "source": "INFRASTRUCTURE_METRICS",
+              "type": "ibmMqQueueManager",
+              "metricPath": [
+                "IBM MQ",
+                "IBM MQ Queue Manager"
+              ],
+              "formatter": "number.compact",
+              "unit": "number",
+              "metric": "connectionCount",
+              "timeShift": 0,
+              "tagFilterExpression": {
+                "tagDefinition": {
+                  "path": [
+                    {
+                      "label": "Messaging"
+                    },
+                    {
+                      "label": "IBM MQ"
+                    },
+                    {
+                      "label": "ibmmq.queuemanager.name"
+                    }
+                  ],
+                  "name": "ibmmq.queuemanager.name",
+                  "availability": [],
+                  "type": "STRING"
+                },
+                "name": "ibmmq.queuemanager.name",
+                "type": "TAG_FILTER",
+                "value": "QM1@acemq1",
+                "entity": "NOT_APPLICABLE",
+                "operator": "EQUALS"
+              },
+              "allowedCrossSeriesAggregations": [],
+              "metricLabel": "Connection count",
+              "crossSeriesAggregation": "SUM"
+            },
+            {
+              "lastValue": false,
+              "color": "",
+              "compareToTimeShifted": false,
+              "threshold": {
+                "critical": "",
+                "warning": "",
+                "thresholdEnabled": false,
+                "operator": ">="
+              },
+              "aggregation": "MAX",
+              "label": "",
+              "source": "INFRASTRUCTURE_METRICS",
+              "type": "ibmMqQueueManager",
+              "metricPath": [
+                "IBM MQ",
+                "IBM MQ Queue Manager"
+              ],
+              "formatter": "number.compact",
+              "unit": "number",
+              "metric": "messagesOut",
+              "timeShift": 0,
+              "tagFilterExpression": {
+                "tagDefinition": {
+                  "path": [
+                    {
+                      "label": "Messaging"
+                    },
+                    {
+                      "label": "IBM MQ"
+                    },
+                    {
+                      "label": "ibmmq.queuemanager.name"
+                    }
+                  ],
+                  "name": "ibmmq.queuemanager.name",
+                  "availability": [],
+                  "type": "STRING"
+                },
+                "name": "ibmmq.queuemanager.name",
+                "type": "TAG_FILTER",
+                "value": "QM1@acemq1",
+                "entity": "NOT_APPLICABLE",
+                "operator": "EQUALS"
+              },
+              "allowedCrossSeriesAggregations": [],
+              "metricLabel": "Messages Out",
+              "crossSeriesAggregation": "SUM"
+            },
+            {
+              "lastValue": false,
+              "color": "",
+              "compareToTimeShifted": false,
+              "threshold": {
+                "critical": "",
+                "warning": "",
+                "thresholdEnabled": false,
+                "operator": ">="
+              },
+              "aggregation": "MAX",
+              "label": "",
+              "source": "INFRASTRUCTURE_METRICS",
+              "type": "ibmMqChannel",
+              "metricPath": [
+                "IBM MQ",
+                "IBM MQ Channel",
+                "Active Conversations"
+              ],
+              "formatter": "number.compact",
+              "unit": "number",
+              "metric": "activeConversations",
+              "timeShift": 0,
+              "tagFilterExpression": {
+                "tagDefinition": {
+                  "path": [
+                    {
+                      "label": "Messaging"
+                    },
+                    {
+                      "label": "IBM MQ"
+                    },
+                    {
+                      "label": "ibmmq.queuemanager.name"
+                    }
+                  ],
+                  "name": "ibmmq.queuemanager.name",
+                  "availability": [],
+                  "type": "STRING"
+                },
+                "name": "ibmmq.queuemanager.name",
+                "type": "TAG_FILTER",
+                "value": "QM1@acemq1",
+                "entity": "NOT_APPLICABLE",
+                "operator": "EQUALS"
+              },
+              "allowedCrossSeriesAggregations": [],
+              "metricLabel": "Channel active conversations",
+              "crossSeriesAggregation": "SUM"
+            },
+            {
+              "lastValue": false,
+              "color": "",
+              "compareToTimeShifted": false,
+              "threshold": {
+                "critical": "",
+                "warning": "",
+                "thresholdEnabled": false,
+                "operator": ">="
+              },
+              "aggregation": "MAX",
+              "label": "",
+              "source": "INFRASTRUCTURE_METRICS",
+              "type": "ibmMqChannel",
+              "metricPath": [
+                "IBM MQ",
+                "IBM MQ Channel",
+                "Others"
+              ],
+              "formatter": "number.compact",
+              "unit": "number",
+              "metric": "count",
+              "timeShift": 0,
+              "tagFilterExpression": {
+                "tagDefinition": {
+                  "path": [
+                    {
+                      "label": "Messaging"
+                    },
+                    {
+                      "label": "IBM MQ"
+                    },
+                    {
+                      "label": "ibmmq.queuemanager.name"
+                    }
+                  ],
+                  "name": "ibmmq.queuemanager.name",
+                  "availability": [],
+                  "type": "STRING"
+                },
+                "name": "ibmmq.queuemanager.name",
+                "type": "TAG_FILTER",
+                "value": "QM1@acemq1",
+                "entity": "NOT_APPLICABLE",
+                "operator": "EQUALS"
+              },
+              "allowedCrossSeriesAggregations": [
+                "DISTINCT_COUNT"
+              ],
+              "metricLabel": "Count",
+              "crossSeriesAggregation": "DISTINCT_COUNT"
+            },
+            {
+              "lastValue": false,
+              "color": "",
+              "compareToTimeShifted": false,
+              "threshold": {
+                "critical": "",
+                "warning": "",
+                "thresholdEnabled": false,
+                "operator": ">="
+              },
+              "aggregation": "MEAN",
+              "label": "",
+              "source": "INFRASTRUCTURE_METRICS",
+              "type": "ibmMqChannel",
+              "metricPath": [
+                "IBM MQ",
+                "IBM MQ Channel",
+                "Others"
+              ],
+              "formatter": "number.compact",
+              "unit": "number",
+              "metric": "channelStatusMetric",
+              "timeShift": 0,
+              "tagFilterExpression": {
+                "tagDefinition": {
+                  "path": [
+                    {
+                      "label": "Messaging"
+                    },
+                    {
+                      "label": "IBM MQ"
+                    },
+                    {
+                      "label": "ibmmq.queuemanager.name"
+                    }
+                  ],
+                  "name": "ibmmq.queuemanager.name",
+                  "availability": [],
+                  "type": "STRING"
+                },
+                "name": "ibmmq.queuemanager.name",
+                "type": "TAG_FILTER",
+                "value": "QM1@acemq1",
+                "entity": "NOT_APPLICABLE",
+                "operator": "EQUALS"
+              },
+              "allowedCrossSeriesAggregations": [],
+              "metricLabel": "Channel status metric",
+              "crossSeriesAggregation": "MEAN"
+            }
+          ],
+          "formatterSelected": false
+        },
+        "y2": {
+          "formatter": "number.detailed",
+          "renderer": "line",
+          "metrics": []
+        },
+        "type": "TIME_SERIES"
+      },
+      "height": 21
+    }
+  ],
+  "ownerId": "64701bfb8cdbbc00013771d5",
+  "writable": true
+}

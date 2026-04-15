@@ -1,0 +1,67 @@
+{
+  "items": [
+    {
+      "entityType": "ENDPOINT",
+      "id": "UkYlq_TNYuz5E7lROHDSPkthheY",
+      "label": "wxd-system",
+      "serviceId": "f09f3bc0b5ae86d306025626a7222aa8e64fe024",
+      "synthetic": false,
+      "syntheticType": "NON_SYNTHETIC",
+      "technologies": ["awsS3"],
+      "type": "DATABASE"
+    },
+    {
+      "entityType": "ENDPOINT",
+      "id": "bWXB6i9Gx39H7akIEdKawkVpRvg",
+      "label": "worker_status",
+      "serviceId": "529bbdfbadae67e746c6063243e745a91d4b09ca",
+      "synthetic": false,
+      "syntheticType": "NON_SYNTHETIC",
+      "technologies": ["kubernetesService", "mySqlDatabase"],
+      "type": "DATABASE"
+    },
+    {
+      "entityType": "ENDPOINT",
+      "id": "x5kccsHmqTJVKrIo_uSceF0JgcQ",
+      "label": "worker_group",
+      "serviceId": "529bbdfbadae67e746c6063243e745a91d4b09ca",
+      "synthetic": false,
+      "syntheticType": "NON_SYNTHETIC",
+      "technologies": ["kubernetesService", "mySqlDatabase"],
+      "type": "DATABASE"
+    },
+    {
+      "entityType": "ENDPOINT",
+      "id": "cgNBB_tboj_3Tc6fTU7TJlOgHtk",
+      "label": "webhook",
+      "serviceId": "3c04ab513902ee77c23ae8598e4369561122d5a7",
+      "synthetic": false,
+      "syntheticType": "NON_SYNTHETIC",
+      "technologies": ["kubernetesService", "postgreSqlDatabase"],
+      "type": "DATABASE"
+    },
+    {
+      "entityType": "ENDPOINT",
+      "id": "R8gRXX-uaXBtxNox1BolTJGahtA",
+      "label": "watsonx.model_init",
+      "serviceId": "7e341858317ceed868cae198de878e00187e3cf0",
+      "synthetic": false,
+      "syntheticType": "NON_SYNTHETIC",
+      "technologies": ["genai", "watsonx"],
+      "type": "OPENTELEMETRY"
+    },
+    {
+      "entityType": "ENDPOINT",
+      "id": "qw7wtNsxFri68jMPSqvw24R1iPM",
+      "label": "watsonx.generate",
+      "serviceId": "7e341858317ceed868cae198de878e00187e3cf0",
+      "synthetic": false,
+      "syntheticType": "NON_SYNTHETIC",
+      "technologies": ["genai", "watsonx"],
+      "type": "OPENTELEMETRY"
+    }
+  ],
+  "page": 1,
+  "pageSize": 50,
+  "totalHits": 2991
+}

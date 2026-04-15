@@ -1,0 +1,17 @@
+{
+    "servers": {
+      "Instana MCP Server": {
+        "command": "npx",
+        "args": [
+          "mcp-remote", "http://0.0.0.0:8080/mcp/",
+          "--allow-http",
+          "--header", "instana-base-url: https://ibmdevsandbox-instanaibm.instana.io",
+          "--header", "instana-api-token: iMMPGJvGTjq-JGpm1UEVRQ"
+        ],
+        "env": {
+              "SHELL": "/bin/zsh"
+        }
+      }
+    }
+}
+
