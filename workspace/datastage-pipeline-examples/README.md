@@ -56,10 +56,15 @@ datastage-pipeline-examples/
 │   ├── connections.json
 │   ├── parameters.json
 │   └── test_config.json
-├── docs/                           # Additional documentation
-│   ├── job_specifications.md
-│   ├── testing_guide.md
-│   └── deployment_guide.md
+├── docs/                           # Comprehensive documentation
+│   ├── GETTING_STARTED.md         # Getting started guide
+│   ├── JOB_DOCUMENTATION.md       # Detailed job documentation
+│   ├── TESTING_GUIDE.md           # Testing guide
+│   ├── CONFIGURATION_GUIDE.md     # Configuration guide
+│   ├── BEST_PRACTICES.md          # Best practices
+│   ├── TROUBLESHOOTING.md         # Troubleshooting guide
+│   ├── ARCHITECTURE.md            # Architecture overview
+│   └── DEPLOYMENT_GUIDE.md        # Deployment guide
 └── README.md                       # This file
 ```
 
@@ -451,6 +456,24 @@ Contributions are welcome! Please follow these guidelines:
 - Add sample data if applicable
 - Follow DataStage naming conventions
 
+## 📚 Documentation
+
+Comprehensive documentation is available in the [`docs/`](docs/) directory:
+
+### Getting Started
+- **[Getting Started Guide](docs/GETTING_STARTED.md)** - Quick start guide for new users
+- **[Job Documentation](docs/JOB_DOCUMENTATION.md)** - Detailed documentation for each pipeline job
+- **[Configuration Guide](docs/CONFIGURATION_GUIDE.md)** - Complete configuration reference
+
+### Development
+- **[Best Practices](docs/BEST_PRACTICES.md)** - DataStage development best practices
+- **[Testing Guide](docs/TESTING_GUIDE.md)** - Comprehensive testing guide
+- **[Architecture Overview](docs/ARCHITECTURE.md)** - System architecture and design patterns
+
+### Operations
+- **[Deployment Guide](docs/DEPLOYMENT_GUIDE.md)** - Deployment procedures and CI/CD integration
+- **[Troubleshooting Guide](docs/TROUBLESHOOTING.md)** - Common issues and solutions
+
 ## 📄 License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
@@ -460,7 +483,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 For questions or issues:
 - Create an issue in the repository
 - Contact the maintainers
-- Check the documentation in the `docs/` folder
+- Check the comprehensive documentation in the [`docs/`](docs/) folder
 
 ## 🙏 Acknowledgments
 
