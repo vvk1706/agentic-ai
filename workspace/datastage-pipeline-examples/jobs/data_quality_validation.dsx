@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  IBM DataStage Job: Data Quality Validation Pipeline
+  Description: Validates data quality rules and generates quality metrics and reports
+  Author: DataStage Examples
+  Version: 1.0
+-->
+<DSExport>
+  <Job Identifier="DATA_QUALITY_VALIDATION" DateModified="2026-04-09" TimeModified="22:00:00">
+    <Record Identifier="JOB" Type="ServerJob" Readonly="0">
+      <Property Name="Description">Data Quality Validation - Validates data against business rules and quality standards</Property>
+      <Property Name="JobVersion">1.0.0</Property>
+      <Property Name="NULLIndicatorPosition">0</Property>
+      <Property Name="ParameterFileDDName">DD00001</Property>
+      <Property Name="ValidationStatus">0</Property>
+      
+      <!-- Job Parameters -->
+      <Collection Name="Parameters" Type="JobParameter">
+        <SubRecord>
+          <Property Name="Name">SOURCE_DB_CONN</Property>
+          <Property Name="Prompt">Source Database Connection</Property>
+          <Property Name="Default">STAGING_DB</Property>
+          <Property Name="ParamType">String</Property>
+        </SubRecord>
+        <SubRecord>
+          <Property Name="Name">DQ_RULES_DB_CONN</Property>
+          <Property Name="Prompt">Data Quality Rules Database</Property>
+          <Property Name="Default">DQ_METADATA_DB</Property>
+          <Property Name="ParamType">String</Property>
+        </SubRecord>
+        <SubRecord>
+          <Property Name="Name">TABLE_NAME</Property>
+          <Property Name="Prompt">Table to Validate</Property>
+          <Property Name="Default">CUSTOMER_STAGING</Property>
+          <Property Name="ParamType">String</Property>
+        </SubRecord>
+        <SubRecord>
+          <Property Name="Name">VALIDATION_DATE</Property>
+          <Property Name="Prompt">Validation Date</Property>
+          <Property Name="Default">CurrentDate()</Property>
+          <Property Name="ParamType">Date</Property>
+        </SubRecord>
+        <SubRecord>
+          <Property Name="Name">QUALITY_THRESHOLD</Property>
+          <Property Name="Prompt">Quality Score Threshold (%)</Property>
+          <Property Name="Default">95</Property>
+          <Property Name="ParamType">Integer</Property>
+        </SubRecord>
+        <SubRecord>
+          <Property Name="Name">FAIL_ON_THRESHOLD</Property>
+          <Property Name="Prompt">Fail Job if Below Threshold</Property>
+          <Property Name="Default">1</Property>
+          <Property Name="ParamType">Integer</Property>
+        </SubRecord>
+      </Collection>
+      
+      <!-- Stage: Source - Data to Validate -->
+      <Record Identifier="SOURCE_DATA" Type="ODBCConnectorPX">
+        <Property Name="StageType">Source</Property>
+        <Property Name="ConnectionString">#SOURCE_DB_CONN#</Property>
+        <Property Name="TableName">#TABLE_NAME#</Property>
+        <Property Name="SelectStatement">
+          SELECT * FROM #TABLE_NAME#
+        </Property>
+      </Record>
+      
+      <!-- Stage: Lookup - Quality Rules -->
+      <Record Identifier="LOOKUP_QUALITY_RULES" Type="ODBCConnectorPX">
+        <Property Name="StageType">Lookup</Property>
+        <Property Name="ConnectionString">#DQ_RULES_DB_CONN#</Property>
+        <Property Name="TableName">DQ_VALIDATION_RULES</Property>
+        <Property Name="SelectStatement">
+          SELECT 
+            RULE_ID,
+            RULE_NAME,
+            RULE_TYPE,
+            COLUMN_NAME,
+            VALIDATION_EXPRESSION,
+            ERROR_MESSAGE,
+            SEVERITY,
+            IS_ACTIVE
+          FROM DQ_VALIDATION_RULES
+          WHERE TABLE_NAME = '#TABLE_NAME#'
+            AND IS_ACTIVE = 1
+        </Property>
+        <Property Name="LookupType">Normal</Property>
+        <Property Name="LookupFailure">Continue</Property>
+      </Record>
+      
+      <!-- Stage: Transformer - Data Quality Checks -->
+      <Record Identifier="TRANSFORM_DQ_CHECKS" Type="PxTransformer">
+        <Property Name="StageType">Transformer</Property>
+        <Collection Name="Derivations">
+          <!-- Completeness Checks -->
+          <SubRecord>
+            <Property Name="Name">IS_COMPLETE</Property>
+            <Property Name="Expression">
+              Not(IsNull(CUSTOMER_ID)) And 
+              Not(IsNull(FIRST_NAME)) And 
+              Not(IsNull(LAST_NAME)) And 
+              Not(IsNull(EMAIL))
+            </Property>
+          </SubRecord>
+          
+          <!-- Validity Checks -->
+          <SubRecord>
+            <Property Name="Name">IS_EMAIL_VALID</Property>
+            <Property Name="Expression">
+              Index(EMAIL, "@", 1) > 0 And 
+              Index(EMAIL, ".", Index(EMAIL, "@", 1)) > 0 And
+              Len(Trim(EMAIL)) >= 5
+            </Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">IS_PHONE_VALID</Property>
+            <Property Name="Expression">
+              Len(Convert("[^0-9]", "", PHONE)) >= 10 And
+              Len(Convert("[^0-9]", "", PHONE)) <= 15
+            </Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">IS_ZIP_VALID</Property>
+            <Property Name="Expression">
+              Len(Trim(ZIP_CODE)) >= 5 And
+              Len(Trim(ZIP_CODE)) <= 10
+            </Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">IS_DATE_VALID</Property>
+            <Property Name="Expression">
+              Not(IsNull(DATE_OF_BIRTH)) And
+              DATE_OF_BIRTH < CurrentDate() And
+              DATE_OF_BIRTH > CurrentDate() - (365 * 120)
+            </Property>
+          </SubRecord>
+          
+          <!-- Consistency Checks -->
+          <SubRecord>
+            <Property Name="Name">IS_NAME_CONSISTENT</Property>
+            <Property Name="Expression">
+              Len(Trim(FIRST_NAME)) > 0 And
+              Len(Trim(LAST_NAME)) > 0 And
+              Not(Trim(FIRST_NAME) = Trim(LAST_NAME))
+            </Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">IS_ADDRESS_CONSISTENT</Property>
+            <Property Name="Expression">
+              Not(IsNull(ADDRESS)) And
+              Not(IsNull(CITY)) And
+              Not(IsNull(STATE)) And
+              Not(IsNull(COUNTRY))
+            </Property>
+          </SubRecord>
+          
+          <!-- Accuracy Checks -->
+          <SubRecord>
+            <Property Name="Name">IS_EMAIL_DOMAIN_VALID</Property>
+            <Property Name="Expression">
+              Not(Index(Upcase(EMAIL), "TEST", 1) > 0) And
+              Not(Index(Upcase(EMAIL), "EXAMPLE", 1) > 0) And
+              Not(Index(Upcase(EMAIL), "DUMMY", 1) > 0)
+            </Property>
+          </SubRecord>
+          
+          <!-- Uniqueness Check Flag -->
+          <SubRecord>
+            <Property Name="Name">RECORD_HASH</Property>
+            <Property Name="Expression">
+              Checksum(CUSTOMER_ID : EMAIL : PHONE)
+            </Property>
+          </SubRecord>
+          
+          <!-- Overall Quality Score -->
+          <SubRecord>
+            <Property Name="Name">QUALITY_SCORE</Property>
+            <Property Name="Expression">
+              (If IS_COMPLETE Then 15 Else 0) +
+              (If IS_EMAIL_VALID Then 15 Else 0) +
+              (If IS_PHONE_VALID Then 10 Else 0) +
+              (If IS_ZIP_VALID Then 10 Else 0) +
+              (If IS_DATE_VALID Then 10 Else 0) +
+              (If IS_NAME_CONSISTENT Then 10 Else 0) +
+              (If IS_ADDRESS_CONSISTENT Then 15 Else 0) +
+              (If IS_EMAIL_DOMAIN_VALID Then 15 Else 0)
+            </Property>
+          </SubRecord>
+          
+          <!-- Quality Status -->
+          <SubRecord>
+            <Property Name="Name">QUALITY_STATUS</Property>
+            <Property Name="Expression">
+              If QUALITY_SCORE >= 90 Then "EXCELLENT"
+              Else If QUALITY_SCORE >= 75 Then "GOOD"
+              Else If QUALITY_SCORE >= 60 Then "FAIR"
+              Else "POOR"
+            </Property>
+          </SubRecord>
+          
+          <!-- Error Messages -->
+          <SubRecord>
+            <Property Name="Name">ERROR_MESSAGES</Property>
+            <Property Name="Expression">
+              (If Not(IS_COMPLETE) Then "Missing required fields; " Else "") :
+              (If Not(IS_EMAIL_VALID) Then "Invalid email format; " Else "") :
+              (If Not(IS_PHONE_VALID) Then "Invalid phone format; " Else "") :
+              (If Not(IS_ZIP_VALID) Then "Invalid zip code; " Else "") :
+              (If Not(IS_DATE_VALID) Then "Invalid date of birth; " Else "") :
+              (If Not(IS_NAME_CONSISTENT) Then "Inconsistent name data; " Else "") :
+              (If Not(IS_ADDRESS_CONSISTENT) Then "Incomplete address; " Else "") :
+              (If Not(IS_EMAIL_DOMAIN_VALID) Then "Suspicious email domain; " Else "")
+            </Property>
+          </SubRecord>
+          
+          <!-- Validation Metadata -->
+          <SubRecord>
+            <Property Name="Name">VALIDATION_DATE</Property>
+            <Property Name="Expression">#VALIDATION_DATE#</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">VALIDATION_TIMESTAMP</Property>
+            <Property Name="Expression">CurrentTimestamp()</Property>
+          </SubRecord>
+        </Collection>
+        
+        <!-- Constraints for routing -->
+        <Collection Name="Constraints">
+          <SubRecord>
+            <Property Name="Name">PASSED_RECORDS</Property>
+            <Property Name="Expression">QUALITY_SCORE >= #QUALITY_THRESHOLD#</Property>
+            <Property Name="OutputLink">PASSED_OUTPUT</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">FAILED_RECORDS</Property>
+            <Property Name="Expression">QUALITY_SCORE < #QUALITY_THRESHOLD#</Property>
+            <Property Name="OutputLink">FAILED_OUTPUT</Property>
+          </SubRecord>
+        </Collection>
+      </Record>
+      
+      <!-- Stage: Aggregator - Quality Metrics -->
+      <Record Identifier="AGG_QUALITY_METRICS" Type="PxAggregator">
+        <Property Name="StageType">Processing</Property>
+        <Property Name="AggregationType">Hash</Property>
+        <Collection Name="GroupingKeys">
+          <SubRecord>
+            <Property Name="Name">VALIDATION_DATE</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">QUALITY_STATUS</Property>
+          </SubRecord>
+        </Collection>
+        <Collection Name="Aggregations">
+          <SubRecord>
+            <Property Name="Name">RECORD_COUNT</Property>
+            <Property Name="Function">Count</Property>
+            <Property Name="Column">CUSTOMER_ID</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">AVG_QUALITY_SCORE</Property>
+            <Property Name="Function">Avg</Property>
+            <Property Name="Column">QUALITY_SCORE</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">MIN_QUALITY_SCORE</Property>
+            <Property Name="Function">Min</Property>
+            <Property Name="Column">QUALITY_SCORE</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">MAX_QUALITY_SCORE</Property>
+            <Property Name="Function">Max</Property>
+            <Property Name="Column">QUALITY_SCORE</Property>
+          </SubRecord>
+        </Collection>
+      </Record>
+      
+      <!-- Stage: Target - Passed Records -->
+      <Record Identifier="TARGET_PASSED_RECORDS" Type="ODBCConnectorPX">
+        <Property Name="StageType">Target</Property>
+        <Property Name="ConnectionString">#SOURCE_DB_CONN#</Property>
+        <Property Name="TableName">DQ_PASSED_RECORDS</Property>
+        <Property Name="WriteMode">Append</Property>
+      </Record>
+      
+      <!-- Stage: Target - Failed Records -->
+      <Record Identifier="TARGET_FAILED_RECORDS" Type="ODBCConnectorPX">
+        <Property Name="StageType">Target</Property>
+        <Property Name="ConnectionString">#SOURCE_DB_CONN#</Property>
+        <Property Name="TableName">DQ_FAILED_RECORDS</Property>
+        <Property Name="WriteMode">Append</Property>
+      </Record>
+      
+      <!-- Stage: Target - Quality Metrics -->
+      <Record Identifier="TARGET_QUALITY_METRICS" Type="ODBCConnectorPX">
+        <Property Name="StageType">Target</Property>
+        <Property Name="ConnectionString">#DQ_RULES_DB_CONN#</Property>
+        <Property Name="TableName">DQ_QUALITY_METRICS</Property>
+        <Property Name="WriteMode">Append</Property>
+      </Record>
+      
+      <!-- Stage: Target - Quality Report -->
+      <Record Identifier="TARGET_QUALITY_REPORT" Type="SequentialFile">
+        <Property Name="StageType">Target</Property>
+        <Property Name="FileName">/data/reports/dq_report_#VALIDATION_DATE#.csv</Property>
+        <Property Name="FileFormat">Delimited</Property>
+        <Property Name="Delimiter">,</Property>
+        <Property Name="IncludeHeader">1</Property>
+      </Record>
+      
+      <!-- Links between stages -->
+      <Record Identifier="LINK_SOURCE_TO_TRANSFORM" Type="Link">
+        <Property Name="From">SOURCE_DATA</Property>
+        <Property Name="To">TRANSFORM_DQ_CHECKS</Property>
+      </Record>
+      <Record Identifier="LINK_TRANSFORM_TO_PASSED" Type="Link">
+        <Property Name="From">TRANSFORM_DQ_CHECKS.PASSED_OUTPUT</Property>
+        <Property Name="To">TARGET_PASSED_RECORDS</Property>
+      </Record>
+      <Record Identifier="LINK_TRANSFORM_TO_FAILED" Type="Link">
+        <Property Name="From">TRANSFORM_DQ_CHECKS.FAILED_OUTPUT</Property>
+        <Property Name="To">TARGET_FAILED_RECORDS</Property>
+      </Record>
+      <Record Identifier="LINK_TRANSFORM_TO_REPORT" Type="Link">
+        <Property Name="From">TRANSFORM_DQ_CHECKS.FAILED_OUTPUT</Property>
+        <Property Name="To">TARGET_QUALITY_REPORT</Property>
+      </Record>
+      <Record Identifier="LINK_TRANSFORM_TO_AGG" Type="Link">
+        <Property Name="From">TRANSFORM_DQ_CHECKS</Property>
+        <Property Name="To">AGG_QUALITY_METRICS</Property>
+      </Record>
+      <Record Identifier="LINK_AGG_TO_METRICS" Type="Link">
+        <Property Name="From">AGG_QUALITY_METRICS</Property>
+        <Property Name="To">TARGET_QUALITY_METRICS</Property>
+      </Record>
+    </Record>
+  </Job>
+</DSExport>

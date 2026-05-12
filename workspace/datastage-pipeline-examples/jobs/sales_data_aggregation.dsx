@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  IBM DataStage Job: Sales Data Aggregation Pipeline
+  Description: Aggregates daily sales transactions by product, region, and time period
+  Author: DataStage Examples
+  Version: 1.0
+-->
+<DSExport>
+  <Job Identifier="SALES_DATA_AGGREGATION" DateModified="2026-04-09" TimeModified="22:00:00">
+    <Record Identifier="JOB" Type="ServerJob" Readonly="0">
+      <Property Name="Description">Sales Data Aggregation - Daily sales summary by product and region</Property>
+      <Property Name="JobVersion">1.0.0</Property>
+      <Property Name="NULLIndicatorPosition">0</Property>
+      <Property Name="ParameterFileDDName">DD00001</Property>
+      <Property Name="ValidationStatus">0</Property>
+      
+      <!-- Job Parameters -->
+      <Collection Name="Parameters" Type="JobParameter">
+        <SubRecord>
+          <Property Name="Name">SOURCE_DB_CONN</Property>
+          <Property Name="Prompt">Source Database Connection</Property>
+          <Property Name="Default">SALES_TRANSACTIONAL_DB</Property>
+          <Property Name="ParamType">String</Property>
+        </SubRecord>
+        <SubRecord>
+          <Property Name="Name">TARGET_DB_CONN</Property>
+          <Property Name="Prompt">Target Database Connection</Property>
+          <Property Name="Default">SALES_DW</Property>
+          <Property Name="ParamType">String</Property>
+        </SubRecord>
+        <SubRecord>
+          <Property Name="Name">START_DATE</Property>
+          <Property Name="Prompt">Start Date for Processing</Property>
+          <Property Name="Default">CurrentDate() - 1</Property>
+          <Property Name="ParamType">Date</Property>
+        </SubRecord>
+        <SubRecord>
+          <Property Name="Name">END_DATE</Property>
+          <Property Name="Prompt">End Date for Processing</Property>
+          <Property Name="Default">CurrentDate()</Property>
+          <Property Name="ParamType">Date</Property>
+        </SubRecord>
+        <SubRecord>
+          <Property Name="Name">AGGREGATION_LEVEL</Property>
+          <Property Name="Prompt">Aggregation Level (DAILY/WEEKLY/MONTHLY)</Property>
+          <Property Name="Default">DAILY</Property>
+          <Property Name="ParamType">String</Property>
+        </SubRecord>
+      </Collection>
+      
+      <!-- Stage: Source - Sales Transactions -->
+      <Record Identifier="SOURCE_SALES_TRANSACTIONS" Type="ODBCConnectorPX">
+        <Property Name="StageType">Source</Property>
+        <Property Name="ConnectionString">#SOURCE_DB_CONN#</Property>
+        <Property Name="TableName">SALES_TRANSACTIONS</Property>
+        <Property Name="SelectStatement">
+          SELECT 
+            TRANSACTION_ID,
+            TRANSACTION_DATE,
+            TRANSACTION_TIME,
+            PRODUCT_ID,
+            PRODUCT_NAME,
+            PRODUCT_CATEGORY,
+            QUANTITY,
+            UNIT_PRICE,
+            DISCOUNT_AMOUNT,
+            TAX_AMOUNT,
+            TOTAL_AMOUNT,
+            CUSTOMER_ID,
+            STORE_ID,
+            STORE_NAME,
+            REGION,
+            COUNTRY,
+            PAYMENT_METHOD,
+            SALES_CHANNEL
+          FROM SALES_TRANSACTIONS
+          WHERE TRANSACTION_DATE BETWEEN #START_DATE# AND #END_DATE#
+            AND TRANSACTION_STATUS = 'COMPLETED'
+        </Property>
+        <Collection Name="Columns">
+          <SubRecord>
+            <Property Name="Name">TRANSACTION_ID</Property>
+            <Property Name="SqlType">VARCHAR</Property>
+            <Property Name="Length">50</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">TRANSACTION_DATE</Property>
+            <Property Name="SqlType">DATE</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">TRANSACTION_TIME</Property>
+            <Property Name="SqlType">TIME</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">PRODUCT_ID</Property>
+            <Property Name="SqlType">INTEGER</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">PRODUCT_NAME</Property>
+            <Property Name="SqlType">VARCHAR</Property>
+            <Property Name="Length">200</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">PRODUCT_CATEGORY</Property>
+            <Property Name="SqlType">VARCHAR</Property>
+            <Property Name="Length">100</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">QUANTITY</Property>
+            <Property Name="SqlType">INTEGER</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">UNIT_PRICE</Property>
+            <Property Name="SqlType">DECIMAL</Property>
+            <Property Name="Precision">10</Property>
+            <Property Name="Scale">2</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">DISCOUNT_AMOUNT</Property>
+            <Property Name="SqlType">DECIMAL</Property>
+            <Property Name="Precision">10</Property>
+            <Property Name="Scale">2</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">TAX_AMOUNT</Property>
+            <Property Name="SqlType">DECIMAL</Property>
+            <Property Name="Precision">10</Property>
+            <Property Name="Scale">2</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">TOTAL_AMOUNT</Property>
+            <Property Name="SqlType">DECIMAL</Property>
+            <Property Name="Precision">10</Property>
+            <Property Name="Scale">2</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">CUSTOMER_ID</Property>
+            <Property Name="SqlType">INTEGER</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">STORE_ID</Property>
+            <Property Name="SqlType">INTEGER</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">STORE_NAME</Property>
+            <Property Name="SqlType">VARCHAR</Property>
+            <Property Name="Length">100</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">REGION</Property>
+            <Property Name="SqlType">VARCHAR</Property>
+            <Property Name="Length">50</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">COUNTRY</Property>
+            <Property Name="SqlType">VARCHAR</Property>
+            <Property Name="Length">50</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">PAYMENT_METHOD</Property>
+            <Property Name="SqlType">VARCHAR</Property>
+            <Property Name="Length">50</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">SALES_CHANNEL</Property>
+            <Property Name="SqlType">VARCHAR</Property>
+            <Property Name="Length">50</Property>
+          </SubRecord>
+        </Collection>
+      </Record>
+      
+      <!-- Stage: Transformer - Calculate Metrics -->
+      <Record Identifier="TRANSFORM_SALES_METRICS" Type="PxTransformer">
+        <Property Name="StageType">Transformer</Property>
+        <Collection Name="Derivations">
+          <SubRecord>
+            <Property Name="Name">NET_AMOUNT</Property>
+            <Property Name="Expression">TOTAL_AMOUNT - DISCOUNT_AMOUNT</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">GROSS_PROFIT</Property>
+            <Property Name="Expression">NET_AMOUNT - TAX_AMOUNT</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">REVENUE</Property>
+            <Property Name="Expression">QUANTITY * UNIT_PRICE</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">DISCOUNT_PERCENTAGE</Property>
+            <Property Name="Expression">If REVENUE > 0 Then (DISCOUNT_AMOUNT / REVENUE) * 100 Else 0</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">YEAR</Property>
+            <Property Name="Expression">YearFromDate(TRANSACTION_DATE)</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">MONTH</Property>
+            <Property Name="Expression">MonthFromDate(TRANSACTION_DATE)</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">QUARTER</Property>
+            <Property Name="Expression">QuarterFromDate(TRANSACTION_DATE)</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">DAY_OF_WEEK</Property>
+            <Property Name="Expression">WeekdayFromDate(TRANSACTION_DATE)</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">HOUR_OF_DAY</Property>
+            <Property Name="Expression">HourFromTime(TRANSACTION_TIME)</Property>
+          </SubRecord>
+        </Collection>
+      </Record>
+      
+      <!-- Stage: Aggregator - Daily Product Sales -->
+      <Record Identifier="AGG_DAILY_PRODUCT_SALES" Type="PxAggregator">
+        <Property Name="StageType">Processing</Property>
+        <Property Name="AggregationType">Hash</Property>
+        <Collection Name="GroupingKeys">
+          <SubRecord>
+            <Property Name="Name">TRANSACTION_DATE</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">PRODUCT_ID</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">PRODUCT_NAME</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">PRODUCT_CATEGORY</Property>
+          </SubRecord>
+        </Collection>
+        <Collection Name="Aggregations">
+          <SubRecord>
+            <Property Name="Name">TOTAL_QUANTITY</Property>
+            <Property Name="Function">Sum</Property>
+            <Property Name="Column">QUANTITY</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">TOTAL_REVENUE</Property>
+            <Property Name="Function">Sum</Property>
+            <Property Name="Column">REVENUE</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">TOTAL_DISCOUNT</Property>
+            <Property Name="Function">Sum</Property>
+            <Property Name="Column">DISCOUNT_AMOUNT</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">TOTAL_TAX</Property>
+            <Property Name="Function">Sum</Property>
+            <Property Name="Column">TAX_AMOUNT</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">TOTAL_NET_AMOUNT</Property>
+            <Property Name="Function">Sum</Property>
+            <Property Name="Column">NET_AMOUNT</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">TRANSACTION_COUNT</Property>
+            <Property Name="Function">Count</Property>
+            <Property Name="Column">TRANSACTION_ID</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">UNIQUE_CUSTOMERS</Property>
+            <Property Name="Function">CountDistinct</Property>
+            <Property Name="Column">CUSTOMER_ID</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">AVG_TRANSACTION_VALUE</Property>
+            <Property Name="Function">Avg</Property>
+            <Property Name="Column">TOTAL_AMOUNT</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">MAX_TRANSACTION_VALUE</Property>
+            <Property Name="Function">Max</Property>
+            <Property Name="Column">TOTAL_AMOUNT</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">MIN_TRANSACTION_VALUE</Property>
+            <Property Name="Function">Min</Property>
+            <Property Name="Column">TOTAL_AMOUNT</Property>
+          </SubRecord>
+        </Collection>
+      </Record>
+      
+      <!-- Stage: Aggregator - Regional Sales -->
+      <Record Identifier="AGG_REGIONAL_SALES" Type="PxAggregator">
+        <Property Name="StageType">Processing</Property>
+        <Property Name="AggregationType">Hash</Property>
+        <Collection Name="GroupingKeys">
+          <SubRecord>
+            <Property Name="Name">TRANSACTION_DATE</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">REGION</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">COUNTRY</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">STORE_ID</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">STORE_NAME</Property>
+          </SubRecord>
+        </Collection>
+        <Collection Name="Aggregations">
+          <SubRecord>
+            <Property Name="Name">TOTAL_SALES</Property>
+            <Property Name="Function">Sum</Property>
+            <Property Name="Column">TOTAL_AMOUNT</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">TOTAL_TRANSACTIONS</Property>
+            <Property Name="Function">Count</Property>
+            <Property Name="Column">TRANSACTION_ID</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">TOTAL_CUSTOMERS</Property>
+            <Property Name="Function">CountDistinct</Property>
+            <Property Name="Column">CUSTOMER_ID</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">AVG_BASKET_SIZE</Property>
+            <Property Name="Function">Avg</Property>
+            <Property Name="Column">QUANTITY</Property>
+          </SubRecord>
+        </Collection>
+      </Record>
+      
+      <!-- Stage: Target - Product Sales Summary -->
+      <Record Identifier="TARGET_PRODUCT_SALES" Type="ODBCConnectorPX">
+        <Property Name="StageType">Target</Property>
+        <Property Name="ConnectionString">#TARGET_DB_CONN#</Property>
+        <Property Name="TableName">DW_PRODUCT_SALES_DAILY</Property>
+        <Property Name="WriteMode">Append</Property>
+        <Property Name="UpdateAction">Replace</Property>
+        <Property Name="UpdateKey">TRANSACTION_DATE,PRODUCT_ID</Property>
+      </Record>
+      
+      <!-- Stage: Target - Regional Sales Summary -->
+      <Record Identifier="TARGET_REGIONAL_SALES" Type="ODBCConnectorPX">
+        <Property Name="StageType">Target</Property>
+        <Property Name="ConnectionString">#TARGET_DB_CONN#</Property>
+        <Property Name="TableName">DW_REGIONAL_SALES_DAILY</Property>
+        <Property Name="WriteMode">Append</Property>
+        <Property Name="UpdateAction">Replace</Property>
+        <Property Name="UpdateKey">TRANSACTION_DATE,REGION,STORE_ID</Property>
+      </Record>
+      
+      <!-- Links between stages -->
+      <Record Identifier="LINK_SOURCE_TO_TRANSFORM" Type="Link">
+        <Property Name="From">SOURCE_SALES_TRANSACTIONS</Property>
+        <Property Name="To">TRANSFORM_SALES_METRICS</Property>
+      </Record>
+      <Record Identifier="LINK_TRANSFORM_TO_PRODUCT_AGG" Type="Link">
+        <Property Name="From">TRANSFORM_SALES_METRICS</Property>
+        <Property Name="To">AGG_DAILY_PRODUCT_SALES</Property>
+      </Record>
+      <Record Identifier="LINK_TRANSFORM_TO_REGIONAL_AGG" Type="Link">
+        <Property Name="From">TRANSFORM_SALES_METRICS</Property>
+        <Property Name="To">AGG_REGIONAL_SALES</Property>
+      </Record>
+      <Record Identifier="LINK_PRODUCT_AGG_TO_TARGET" Type="Link">
+        <Property Name="From">AGG_DAILY_PRODUCT_SALES</Property>
+        <Property Name="To">TARGET_PRODUCT_SALES</Property>
+      </Record>
+      <Record Identifier="LINK_REGIONAL_AGG_TO_TARGET" Type="Link">
+        <Property Name="From">AGG_REGIONAL_SALES</Property>
+        <Property Name="To">TARGET_REGIONAL_SALES</Property>
+      </Record>
+    </Record>
+  </Job>
+</DSExport>

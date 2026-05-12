@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  IBM DataStage Job: Incremental Load Pipeline
+  Description: Performs incremental data loading using CDC (Change Data Capture) approach
+  Author: DataStage Examples
+  Version: 1.0
+-->
+<DSExport>
+  <Job Identifier="INCREMENTAL_LOAD" DateModified="2026-04-09" TimeModified="22:00:00">
+    <Record Identifier="JOB" Type="ServerJob" Readonly="0">
+      <Property Name="Description">Incremental Load - CDC-based incremental data loading with SCD Type 2</Property>
+      <Property Name="JobVersion">1.0.0</Property>
+      <Property Name="NULLIndicatorPosition">0</Property>
+      <Property Name="ParameterFileDDName">DD00001</Property>
+      <Property Name="ValidationStatus">0</Property>
+      
+      <!-- Job Parameters -->
+      <Collection Name="Parameters" Type="JobParameter">
+        <SubRecord>
+          <Property Name="Name">SOURCE_DB_CONN</Property>
+          <Property Name="Prompt">Source Database Connection</Property>
+          <Property Name="Default">OPERATIONAL_DB</Property>
+          <Property Name="ParamType">String</Property>
+        </SubRecord>
+        <SubRecord>
+          <Property Name="Name">TARGET_DB_CONN</Property>
+          <Property Name="Prompt">Target Database Connection</Property>
+          <Property Name="Default">DATA_WAREHOUSE</Property>
+          <Property Name="ParamType">String</Property>
+        </SubRecord>
+        <SubRecord>
+          <Property Name="Name">CONTROL_DB_CONN</Property>
+          <Property Name="Prompt">Control Database Connection</Property>
+          <Property Name="Default">ETL_CONTROL_DB</Property>
+          <Property Name="ParamType">String</Property>
+        </SubRecord>
+        <SubRecord>
+          <Property Name="Name">TABLE_NAME</Property>
+          <Property Name="Prompt">Source Table Name</Property>
+          <Property Name="Default">PRODUCTS</Property>
+          <Property Name="ParamType">String</Property>
+        </SubRecord>
+        <SubRecord>
+          <Property Name="Name">LAST_LOAD_TIMESTAMP</Property>
+          <Property Name="Prompt">Last Load Timestamp</Property>
+          <Property Name="Default">GetJobParameter("LAST_RUN_TIME")</Property>
+          <Property Name="ParamType">Timestamp</Property>
+        </SubRecord>
+        <SubRecord>
+          <Property Name="Name">CURRENT_LOAD_TIMESTAMP</Property>
+          <Property Name="Prompt">Current Load Timestamp</Property>
+          <Property Name="Default">CurrentTimestamp()</Property>
+          <Property Name="ParamType">Timestamp</Property>
+        </SubRecord>
+        <SubRecord>
+          <Property Name="Name">SCD_TYPE</Property>
+          <Property Name="Prompt">SCD Type (1 or 2)</Property>
+          <Property Name="Default">2</Property>
+          <Property Name="ParamType">Integer</Property>
+        </SubRecord>
+      </Collection>
+      
+      <!-- Stage: Source - New and Changed Records -->
+      <Record Identifier="SOURCE_INCREMENTAL_DATA" Type="ODBCConnectorPX">
+        <Property Name="StageType">Source</Property>
+        <Property Name="ConnectionString">#SOURCE_DB_CONN#</Property>
+        <Property Name="TableName">#TABLE_NAME#</Property>
+        <Property Name="SelectStatement">
+          SELECT 
+            PRODUCT_ID,
+            PRODUCT_CODE,
+            PRODUCT_NAME,
+            PRODUCT_DESCRIPTION,
+            CATEGORY_ID,
+            CATEGORY_NAME,
+            BRAND,
+            UNIT_PRICE,
+            COST_PRICE,
+            STOCK_QUANTITY,
+            REORDER_LEVEL,
+            SUPPLIER_ID,
+            SUPPLIER_NAME,
+            IS_ACTIVE,
+            CREATED_DATE,
+            LAST_MODIFIED_DATE,
+            LAST_MODIFIED_BY,
+            VERSION_NUMBER
+          FROM #TABLE_NAME#
+          WHERE LAST_MODIFIED_DATE > #LAST_LOAD_TIMESTAMP#
+            OR CREATED_DATE > #LAST_LOAD_TIMESTAMP#
+        </Property>
+        <Collection Name="Columns">
+          <SubRecord>
+            <Property Name="Name">PRODUCT_ID</Property>
+            <Property Name="SqlType">INTEGER</Property>
+            <Property Name="Nullable">0</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">PRODUCT_CODE</Property>
+            <Property Name="SqlType">VARCHAR</Property>
+            <Property Name="Length">50</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">PRODUCT_NAME</Property>
+            <Property Name="SqlType">VARCHAR</Property>
+            <Property Name="Length">200</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">PRODUCT_DESCRIPTION</Property>
+            <Property Name="SqlType">VARCHAR</Property>
+            <Property Name="Length">1000</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">CATEGORY_ID</Property>
+            <Property Name="SqlType">INTEGER</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">CATEGORY_NAME</Property>
+            <Property Name="SqlType">VARCHAR</Property>
+            <Property Name="Length">100</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">BRAND</Property>
+            <Property Name="SqlType">VARCHAR</Property>
+            <Property Name="Length">100</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">UNIT_PRICE</Property>
+            <Property Name="SqlType">DECIMAL</Property>
+            <Property Name="Precision">10</Property>
+            <Property Name="Scale">2</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">COST_PRICE</Property>
+            <Property Name="SqlType">DECIMAL</Property>
+            <Property Name="Precision">10</Property>
+            <Property Name="Scale">2</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">STOCK_QUANTITY</Property>
+            <Property Name="SqlType">INTEGER</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">REORDER_LEVEL</Property>
+            <Property Name="SqlType">INTEGER</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">SUPPLIER_ID</Property>
+            <Property Name="SqlType">INTEGER</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">SUPPLIER_NAME</Property>
+            <Property Name="SqlType">VARCHAR</Property>
+            <Property Name="Length">200</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">IS_ACTIVE</Property>
+            <Property Name="SqlType">INTEGER</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">CREATED_DATE</Property>
+            <Property Name="SqlType">TIMESTAMP</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">LAST_MODIFIED_DATE</Property>
+            <Property Name="SqlType">TIMESTAMP</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">LAST_MODIFIED_BY</Property>
+            <Property Name="SqlType">VARCHAR</Property>
+            <Property Name="Length">100</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">VERSION_NUMBER</Property>
+            <Property Name="SqlType">INTEGER</Property>
+          </SubRecord>
+        </Collection>
+      </Record>
+      
+      <!-- Stage: Lookup - Existing Target Records -->
+      <Record Identifier="LOOKUP_EXISTING_RECORDS" Type="ODBCConnectorPX">
+        <Property Name="StageType">Lookup</Property>
+        <Property Name="ConnectionString">#TARGET_DB_CONN#</Property>
+        <Property Name="TableName">DW_PRODUCTS</Property>
+        <Property Name="SelectStatement">
+          SELECT 
+            PRODUCT_KEY,
+            PRODUCT_ID,
+            PRODUCT_CODE,
+            PRODUCT_NAME,
+            PRODUCT_DESCRIPTION,
+            CATEGORY_ID,
+            CATEGORY_NAME,
+            BRAND,
+            UNIT_PRICE,
+            COST_PRICE,
+            STOCK_QUANTITY,
+            REORDER_LEVEL,
+            SUPPLIER_ID,
+            SUPPLIER_NAME,
+            IS_ACTIVE,
+            EFFECTIVE_DATE,
+            EXPIRY_DATE,
+            IS_CURRENT,
+            VERSION_NUMBER,
+            RECORD_HASH
+          FROM DW_PRODUCTS
+          WHERE IS_CURRENT = 1
+        </Property>
+        <Property Name="LookupType">Normal</Property>
+        <Property Name="LookupKey">PRODUCT_ID</Property>
+        <Property Name="LookupFailure">Continue</Property>
+      </Record>
+      
+      <!-- Stage: Transformer - CDC Logic -->
+      <Record Identifier="TRANSFORM_CDC_LOGIC" Type="PxTransformer">
+        <Property Name="StageType">Transformer</Property>
+        <Collection Name="Derivations">
+          <!-- Calculate Record Hash for Change Detection -->
+          <SubRecord>
+            <Property Name="Name">SOURCE_HASH</Property>
+            <Property Name="Expression">
+              Checksum(
+                PRODUCT_CODE : "|" :
+                PRODUCT_NAME : "|" :
+                PRODUCT_DESCRIPTION : "|" :
+                Trim(CATEGORY_ID) : "|" :
+                CATEGORY_NAME : "|" :
+                BRAND : "|" :
+                Trim(UNIT_PRICE) : "|" :
+                Trim(COST_PRICE) : "|" :
+                Trim(STOCK_QUANTITY) : "|" :
+                Trim(REORDER_LEVEL) : "|" :
+                Trim(SUPPLIER_ID) : "|" :
+                SUPPLIER_NAME : "|" :
+                Trim(IS_ACTIVE)
+              )
+            </Property>
+          </SubRecord>
+          
+          <!-- Determine Change Type -->
+          <SubRecord>
+            <Property Name="Name">CHANGE_TYPE</Property>
+            <Property Name="Expression">
+              If IsNull(LOOKUP.PRODUCT_KEY) Then "INSERT"
+              Else If SOURCE_HASH <> LOOKUP.RECORD_HASH Then "UPDATE"
+              Else "NO_CHANGE"
+            </Property>
+          </SubRecord>
+          
+          <!-- SCD Type 2 Fields -->
+          <SubRecord>
+            <Property Name="Name">EFFECTIVE_DATE</Property>
+            <Property Name="Expression">#CURRENT_LOAD_TIMESTAMP#</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">EXPIRY_DATE</Property>
+            <Property Name="Expression">
+              If CHANGE_TYPE = "INSERT" Then ToDate("9999-12-31", "%yyyy-%mm-%dd")
+              Else ToDate("9999-12-31", "%yyyy-%mm-%dd")
+            </Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">IS_CURRENT</Property>
+            <Property Name="Expression">1</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">RECORD_HASH</Property>
+            <Property Name="Expression">SOURCE_HASH</Property>
+          </SubRecord>
+          
+          <!-- Audit Fields -->
+          <SubRecord>
+            <Property Name="Name">ETL_INSERT_DATE</Property>
+            <Property Name="Expression">#CURRENT_LOAD_TIMESTAMP#</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">ETL_UPDATE_DATE</Property>
+            <Property Name="Expression">#CURRENT_LOAD_TIMESTAMP#</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">ETL_BATCH_ID</Property>
+            <Property Name="Expression">GetJobId()</Property>
+          </SubRecord>
+          
+          <!-- Previous Record Key for Updates -->
+          <SubRecord>
+            <Property Name="Name">PREVIOUS_PRODUCT_KEY</Property>
+            <Property Name="Expression">
+              If CHANGE_TYPE = "UPDATE" Then LOOKUP.PRODUCT_KEY Else Null
+            </Property>
+          </SubRecord>
+        </Collection>
+        
+        <!-- Constraints for routing -->
+        <Collection Name="Constraints">
+          <SubRecord>
+            <Property Name="Name">NEW_RECORDS</Property>
+            <Property Name="Expression">CHANGE_TYPE = "INSERT"</Property>
+            <Property Name="OutputLink">INSERT_OUTPUT</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">CHANGED_RECORDS</Property>
+            <Property Name="Expression">CHANGE_TYPE = "UPDATE"</Property>
+            <Property Name="OutputLink">UPDATE_OUTPUT</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">UNCHANGED_RECORDS</Property>
+            <Property Name="Expression">CHANGE_TYPE = "NO_CHANGE"</Property>
+            <Property Name="OutputLink">NOCHANGE_OUTPUT</Property>
+          </SubRecord>
+        </Collection>
+      </Record>
+      
+      <!-- Stage: Target - Insert New Records -->
+      <Record Identifier="TARGET_INSERT_RECORDS" Type="ODBCConnectorPX">
+        <Property Name="StageType">Target</Property>
+        <Property Name="ConnectionString">#TARGET_DB_CONN#</Property>
+        <Property Name="TableName">DW_PRODUCTS</Property>
+        <Property Name="WriteMode">Insert</Property>
+        <Property Name="GenerateKey">1</Property>
+        <Property Name="KeyColumn">PRODUCT_KEY</Property>
+      </Record>
+      
+      <!-- Stage: Target - Update Existing Records (SCD Type 2) -->
+      <Record Identifier="TARGET_UPDATE_RECORDS" Type="ODBCConnectorPX">
+        <Property Name="StageType">Target</Property>
+        <Property Name="ConnectionString">#TARGET_DB_CONN#</Property>
+        <Property Name="TableName">DW_PRODUCTS</Property>
+        <Property Name="WriteMode">Insert</Property>
+        <Property Name="GenerateKey">1</Property>
+        <Property Name="KeyColumn">PRODUCT_KEY</Property>
+        <Property Name="BeforeSQL">
+          UPDATE DW_PRODUCTS 
+          SET IS_CURRENT = 0,
+              EXPIRY_DATE = #CURRENT_LOAD_TIMESTAMP#,
+              ETL_UPDATE_DATE = #CURRENT_LOAD_TIMESTAMP#
+          WHERE PRODUCT_ID IN (
+            SELECT DISTINCT PRODUCT_ID 
+            FROM DW_PRODUCTS_STAGING_UPDATE
+          )
+          AND IS_CURRENT = 1
+        </Property>
+      </Record>
+      
+      <!-- Stage: Target - Audit Log -->
+      <Record Identifier="TARGET_AUDIT_LOG" Type="ODBCConnectorPX">
+        <Property Name="StageType">Target</Property>
+        <Property Name="ConnectionString">#CONTROL_DB_CONN#</Property>
+        <Property Name="TableName">ETL_AUDIT_LOG</Property>
+        <Property Name="WriteMode">Append</Property>
+      </Record>
+      
+      <!-- Stage: Aggregator - Load Statistics -->
+      <Record Identifier="AGG_LOAD_STATS" Type="PxAggregator">
+        <Property Name="StageType">Processing</Property>
+        <Property Name="AggregationType">Hash</Property>
+        <Collection Name="GroupingKeys">
+          <SubRecord>
+            <Property Name="Name">CHANGE_TYPE</Property>
+          </SubRecord>
+        </Collection>
+        <Collection Name="Aggregations">
+          <SubRecord>
+            <Property Name="Name">RECORD_COUNT</Property>
+            <Property Name="Function">Count</Property>
+            <Property Name="Column">PRODUCT_ID</Property>
+          </SubRecord>
+        </Collection>
+      </Record>
+      
+      <!-- Stage: Target - Load Statistics -->
+      <Record Identifier="TARGET_LOAD_STATS" Type="ODBCConnectorPX">
+        <Property Name="StageType">Target</Property>
+        <Property Name="ConnectionString">#CONTROL_DB_CONN#</Property>
+        <Property Name="TableName">ETL_LOAD_STATISTICS</Property>
+        <Property Name="WriteMode">Append</Property>
+      </Record>
+      
+      <!-- Links between stages -->
+      <Record Identifier="LINK_SOURCE_TO_LOOKUP" Type="Link">
+        <Property Name="From">SOURCE_INCREMENTAL_DATA</Property>
+        <Property Name="To">LOOKUP_EXISTING_RECORDS</Property>
+      </Record>
+      <Record Identifier="LINK_LOOKUP_TO_TRANSFORM" Type="Link">
+        <Property Name="From">LOOKUP_EXISTING_RECORDS</Property>
+        <Property Name="To">TRANSFORM_CDC_LOGIC</Property>
+      </Record>
+      <Record Identifier="LINK_TRANSFORM_TO_INSERT" Type="Link">
+        <Property Name="From">TRANSFORM_CDC_LOGIC.INSERT_OUTPUT</Property>
+        <Property Name="To">TARGET_INSERT_RECORDS</Property>
+      </Record>
+      <Record Identifier="LINK_TRANSFORM_TO_UPDATE" Type="Link">
+        <Property Name="From">TRANSFORM_CDC_LOGIC.UPDATE_OUTPUT</Property>
+        <Property Name="To">TARGET_UPDATE_RECORDS</Property>
+      </Record>
+      <Record Identifier="LINK_TRANSFORM_TO_AUDIT" Type="Link">
+        <Property Name="From">TRANSFORM_CDC_LOGIC</Property>
+        <Property Name="To">TARGET_AUDIT_LOG</Property>
+      </Record>
+      <Record Identifier="LINK_TRANSFORM_TO_STATS" Type="Link">
+        <Property Name="From">TRANSFORM_CDC_LOGIC</Property>
+        <Property Name="To">AGG_LOAD_STATS</Property>
+      </Record>
+      <Record Identifier="LINK_STATS_TO_TARGET" Type="Link">
+        <Property Name="From">AGG_LOAD_STATS</Property>
+        <Property Name="To">TARGET_LOAD_STATS</Property>
+      </Record>
+    </Record>
+  </Job>
+</DSExport>

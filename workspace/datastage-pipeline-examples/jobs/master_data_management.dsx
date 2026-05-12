@@ -1,0 +1,478 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  IBM DataStage Job: Master Data Management Pipeline
+  Description: Consolidates and manages master data from multiple sources with deduplication
+  Author: DataStage Examples
+  Version: 1.0
+-->
+<DSExport>
+  <Job Identifier="MASTER_DATA_MANAGEMENT" DateModified="2026-04-09" TimeModified="22:00:00">
+    <Record Identifier="JOB" Type="ServerJob" Readonly="0">
+      <Property Name="Description">Master Data Management - Consolidates customer master data with deduplication and matching</Property>
+      <Property Name="JobVersion">1.0.0</Property>
+      <Property Name="NULLIndicatorPosition">0</Property>
+      <Property Name="ParameterFileDDName">DD00001</Property>
+      <Property Name="ValidationStatus">0</Property>
+      
+      <!-- Job Parameters -->
+      <Collection Name="Parameters" Type="JobParameter">
+        <SubRecord>
+          <Property Name="Name">SOURCE1_DB_CONN</Property>
+          <Property Name="Prompt">Source 1 Database Connection</Property>
+          <Property Name="Default">CRM_DB</Property>
+          <Property Name="ParamType">String</Property>
+        </SubRecord>
+        <SubRecord>
+          <Property Name="Name">SOURCE2_DB_CONN</Property>
+          <Property Name="Prompt">Source 2 Database Connection</Property>
+          <Property Name="Default">ERP_DB</Property>
+          <Property Name="ParamType">String</Property>
+        </SubRecord>
+        <SubRecord>
+          <Property Name="Name">SOURCE3_DB_CONN</Property>
+          <Property Name="Prompt">Source 3 Database Connection</Property>
+          <Property Name="Default">ECOMMERCE_DB</Property>
+          <Property Name="ParamType">String</Property>
+        </SubRecord>
+        <SubRecord>
+          <Property Name="Name">MDM_DB_CONN</Property>
+          <Property Name="Prompt">MDM Database Connection</Property>
+          <Property Name="Default">MDM_MASTER_DB</Property>
+          <Property Name="ParamType">String</Property>
+        </SubRecord>
+        <SubRecord>
+          <Property Name="Name">MATCH_THRESHOLD</Property>
+          <Property Name="Prompt">Match Threshold Score (0-100)</Property>
+          <Property Name="Default">85</Property>
+          <Property Name="ParamType">Integer</Property>
+        </SubRecord>
+        <SubRecord>
+          <Property Name="Name">AUTO_MERGE</Property>
+          <Property Name="Prompt">Auto Merge High Confidence Matches</Property>
+          <Property Name="Default">1</Property>
+          <Property Name="ParamType">Integer</Property>
+        </SubRecord>
+        <SubRecord>
+          <Property Name="Name">PROCESSING_DATE</Property>
+          <Property Name="Prompt">Processing Date</Property>
+          <Property Name="Default">CurrentDate()</Property>
+          <Property Name="ParamType">Date</Property>
+        </SubRecord>
+      </Collection>
+      
+      <!-- Stage: Source 1 - CRM System -->
+      <Record Identifier="SOURCE_CRM" Type="ODBCConnectorPX">
+        <Property Name="StageType">Source</Property>
+        <Property Name="ConnectionString">#SOURCE1_DB_CONN#</Property>
+        <Property Name="TableName">CRM_CUSTOMERS</Property>
+        <Property Name="SelectStatement">
+          SELECT 
+            'CRM' as SOURCE_SYSTEM,
+            CUSTOMER_ID as SOURCE_ID,
+            FIRST_NAME,
+            LAST_NAME,
+            EMAIL,
+            PHONE,
+            MOBILE_PHONE,
+            ADDRESS_LINE1,
+            ADDRESS_LINE2,
+            CITY,
+            STATE,
+            ZIP_CODE,
+            COUNTRY,
+            DATE_OF_BIRTH,
+            GENDER,
+            CUSTOMER_SINCE,
+            LAST_UPDATED
+          FROM CRM_CUSTOMERS
+          WHERE IS_ACTIVE = 1
+        </Property>
+      </Record>
+      
+      <!-- Stage: Source 2 - ERP System -->
+      <Record Identifier="SOURCE_ERP" Type="ODBCConnectorPX">
+        <Property Name="StageType">Source</Property>
+        <Property Name="ConnectionString">#SOURCE2_DB_CONN#</Property>
+        <Property Name="TableName">ERP_CUSTOMERS</Property>
+        <Property Name="SelectStatement">
+          SELECT 
+            'ERP' as SOURCE_SYSTEM,
+            CUST_NO as SOURCE_ID,
+            FNAME as FIRST_NAME,
+            LNAME as LAST_NAME,
+            EMAIL_ADDR as EMAIL,
+            PHONE_NUM as PHONE,
+            MOBILE_NUM as MOBILE_PHONE,
+            ADDR1 as ADDRESS_LINE1,
+            ADDR2 as ADDRESS_LINE2,
+            CITY,
+            STATE_CODE as STATE,
+            POSTAL_CODE as ZIP_CODE,
+            COUNTRY_CODE as COUNTRY,
+            BIRTH_DATE as DATE_OF_BIRTH,
+            SEX as GENDER,
+            CREATE_DATE as CUSTOMER_SINCE,
+            MOD_DATE as LAST_UPDATED
+          FROM ERP_CUSTOMERS
+          WHERE STATUS = 'A'
+        </Property>
+      </Record>
+      
+      <!-- Stage: Source 3 - E-Commerce System -->
+      <Record Identifier="SOURCE_ECOMMERCE" Type="ODBCConnectorPX">
+        <Property Name="StageType">Source</Property>
+        <Property Name="ConnectionString">#SOURCE3_DB_CONN#</Property>
+        <Property Name="TableName">ECOM_USERS</Property>
+        <Property Name="SelectStatement">
+          SELECT 
+            'ECOMMERCE' as SOURCE_SYSTEM,
+            USER_ID as SOURCE_ID,
+            FIRST_NAME,
+            LAST_NAME,
+            EMAIL,
+            PHONE_NUMBER as PHONE,
+            MOBILE as MOBILE_PHONE,
+            SHIPPING_ADDRESS1 as ADDRESS_LINE1,
+            SHIPPING_ADDRESS2 as ADDRESS_LINE2,
+            SHIPPING_CITY as CITY,
+            SHIPPING_STATE as STATE,
+            SHIPPING_ZIP as ZIP_CODE,
+            SHIPPING_COUNTRY as COUNTRY,
+            DOB as DATE_OF_BIRTH,
+            GENDER,
+            REGISTRATION_DATE as CUSTOMER_SINCE,
+            UPDATED_AT as LAST_UPDATED
+          FROM ECOM_USERS
+          WHERE ACCOUNT_STATUS = 'ACTIVE'
+        </Property>
+      </Record>
+      
+      <!-- Stage: Funnel - Combine All Sources -->
+      <Record Identifier="FUNNEL_ALL_SOURCES" Type="PxFunnel">
+        <Property Name="StageType">Processing</Property>
+        <Property Name="FunnelType">Continuous</Property>
+      </Record>
+      
+      <!-- Stage: Transformer - Standardize and Prepare for Matching -->
+      <Record Identifier="TRANSFORM_STANDARDIZE" Type="PxTransformer">
+        <Property Name="StageType">Transformer</Property>
+        <Collection Name="Derivations">
+          <!-- Standardize Names -->
+          <SubRecord>
+            <Property Name="Name">FIRST_NAME_STD</Property>
+            <Property Name="Expression">Trim(Upcase(FIRST_NAME))</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">LAST_NAME_STD</Property>
+            <Property Name="Expression">Trim(Upcase(LAST_NAME))</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">FULL_NAME_STD</Property>
+            <Property Name="Expression">FIRST_NAME_STD : " " : LAST_NAME_STD</Property>
+          </SubRecord>
+          
+          <!-- Standardize Email -->
+          <SubRecord>
+            <Property Name="Name">EMAIL_STD</Property>
+            <Property Name="Expression">Trim(Upcase(EMAIL))</Property>
+          </SubRecord>
+          
+          <!-- Standardize Phone Numbers -->
+          <SubRecord>
+            <Property Name="Name">PHONE_STD</Property>
+            <Property Name="Expression">Convert("[^0-9]", "", PHONE)</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">MOBILE_PHONE_STD</Property>
+            <Property Name="Expression">Convert("[^0-9]", "", MOBILE_PHONE)</Property>
+          </SubRecord>
+          
+          <!-- Standardize Address -->
+          <SubRecord>
+            <Property Name="Name">ADDRESS_STD</Property>
+            <Property Name="Expression">
+              Trim(Upcase(ADDRESS_LINE1 : " " : ADDRESS_LINE2))
+            </Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">CITY_STD</Property>
+            <Property Name="Expression">Trim(Upcase(CITY))</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">STATE_STD</Property>
+            <Property Name="Expression">Trim(Upcase(STATE))</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">ZIP_CODE_STD</Property>
+            <Property Name="Expression">Convert("[^0-9]", "", ZIP_CODE)</Property>
+          </SubRecord>
+          
+          <!-- Generate Matching Keys -->
+          <SubRecord>
+            <Property Name="Name">NAME_KEY</Property>
+            <Property Name="Expression">Soundex(LAST_NAME_STD) : Soundex(FIRST_NAME_STD)</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">EMAIL_KEY</Property>
+            <Property Name="Expression">EMAIL_STD</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">PHONE_KEY</Property>
+            <Property Name="Expression">
+              If Len(PHONE_STD) >= 10 Then Right(PHONE_STD, 10) Else PHONE_STD
+            </Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">ADDRESS_KEY</Property>
+            <Property Name="Expression">
+              Soundex(CITY_STD) : Left(ZIP_CODE_STD, 5)
+            </Property>
+          </SubRecord>
+          
+          <!-- Composite Matching Key -->
+          <SubRecord>
+            <Property Name="Name">COMPOSITE_KEY</Property>
+            <Property Name="Expression">
+              NAME_KEY : "|" : EMAIL_KEY : "|" : PHONE_KEY
+            </Property>
+          </SubRecord>
+          
+          <!-- Record Hash -->
+          <SubRecord>
+            <Property Name="Name">RECORD_HASH</Property>
+            <Property Name="Expression">
+              Checksum(
+                FIRST_NAME_STD : LAST_NAME_STD : EMAIL_STD : 
+                PHONE_STD : ADDRESS_STD : CITY_STD : STATE_STD : ZIP_CODE_STD
+              )
+            </Property>
+          </SubRecord>
+        </Collection>
+      </Record>
+      
+      <!-- Stage: Lookup - Existing Master Records -->
+      <Record Identifier="LOOKUP_MASTER_RECORDS" Type="ODBCConnectorPX">
+        <Property Name="StageType">Lookup</Property>
+        <Property Name="ConnectionString">#MDM_DB_CONN#</Property>
+        <Property Name="TableName">MDM_CUSTOMER_MASTER</Property>
+        <Property Name="SelectStatement">
+          SELECT 
+            MASTER_ID,
+            FIRST_NAME_STD,
+            LAST_NAME_STD,
+            EMAIL_STD,
+            PHONE_STD,
+            MOBILE_PHONE_STD,
+            ADDRESS_STD,
+            CITY_STD,
+            STATE_STD,
+            ZIP_CODE_STD,
+            COMPOSITE_KEY,
+            RECORD_HASH,
+            CONFIDENCE_SCORE,
+            IS_GOLDEN_RECORD
+          FROM MDM_CUSTOMER_MASTER
+          WHERE IS_ACTIVE = 1
+        </Property>
+        <Property Name="LookupType">Normal</Property>
+        <Property Name="LookupKey">COMPOSITE_KEY</Property>
+        <Property Name="LookupFailure">Continue</Property>
+      </Record>
+      
+      <!-- Stage: Transformer - Matching and Scoring -->
+      <Record Identifier="TRANSFORM_MATCHING" Type="PxTransformer">
+        <Property Name="StageType">Transformer</Property>
+        <Collection Name="Derivations">
+          <!-- Calculate Match Scores -->
+          <SubRecord>
+            <Property Name="Name">NAME_MATCH_SCORE</Property>
+            <Property Name="Expression">
+              If IsNull(LOOKUP.MASTER_ID) Then 0
+              Else If FULL_NAME_STD = LOOKUP.FIRST_NAME_STD : " " : LOOKUP.LAST_NAME_STD Then 100
+              Else If Soundex(LAST_NAME_STD) = Soundex(LOOKUP.LAST_NAME_STD) Then 80
+              Else 0
+            </Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">EMAIL_MATCH_SCORE</Property>
+            <Property Name="Expression">
+              If IsNull(LOOKUP.MASTER_ID) Then 0
+              Else If EMAIL_STD = LOOKUP.EMAIL_STD Then 100
+              Else 0
+            </Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">PHONE_MATCH_SCORE</Property>
+            <Property Name="Expression">
+              If IsNull(LOOKUP.MASTER_ID) Then 0
+              Else If PHONE_STD = LOOKUP.PHONE_STD Or MOBILE_PHONE_STD = LOOKUP.MOBILE_PHONE_STD Then 100
+              Else 0
+            </Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">ADDRESS_MATCH_SCORE</Property>
+            <Property Name="Expression">
+              If IsNull(LOOKUP.MASTER_ID) Then 0
+              Else If ADDRESS_STD = LOOKUP.ADDRESS_STD And ZIP_CODE_STD = LOOKUP.ZIP_CODE_STD Then 100
+              Else If CITY_STD = LOOKUP.CITY_STD And STATE_STD = LOOKUP.STATE_STD Then 60
+              Else 0
+            </Property>
+          </SubRecord>
+          
+          <!-- Overall Match Score (Weighted) -->
+          <SubRecord>
+            <Property Name="Name">OVERALL_MATCH_SCORE</Property>
+            <Property Name="Expression">
+              (NAME_MATCH_SCORE * 0.30) +
+              (EMAIL_MATCH_SCORE * 0.35) +
+              (PHONE_MATCH_SCORE * 0.25) +
+              (ADDRESS_MATCH_SCORE * 0.10)
+            </Property>
+          </SubRecord>
+          
+          <!-- Match Classification -->
+          <SubRecord>
+            <Property Name="Name">MATCH_TYPE</Property>
+            <Property Name="Expression">
+              If IsNull(LOOKUP.MASTER_ID) Then "NEW"
+              Else If OVERALL_MATCH_SCORE >= 95 Then "EXACT_MATCH"
+              Else If OVERALL_MATCH_SCORE >= #MATCH_THRESHOLD# Then "HIGH_CONFIDENCE"
+              Else If OVERALL_MATCH_SCORE >= 70 Then "POSSIBLE_MATCH"
+              Else "NO_MATCH"
+            </Property>
+          </SubRecord>
+          
+          <!-- Master ID Assignment -->
+          <SubRecord>
+            <Property Name="Name">ASSIGNED_MASTER_ID</Property>
+            <Property Name="Expression">
+              If MATCH_TYPE = "NEW" Or MATCH_TYPE = "NO_MATCH" Then Null
+              Else LOOKUP.MASTER_ID
+            </Property>
+          </SubRecord>
+          
+          <!-- Survivorship Rules - Best Source Priority -->
+          <SubRecord>
+            <Property Name="Name">SOURCE_PRIORITY</Property>
+            <Property Name="Expression">
+              If SOURCE_SYSTEM = "CRM" Then 1
+              Else If SOURCE_SYSTEM = "ERP" Then 2
+              Else If SOURCE_SYSTEM = "ECOMMERCE" Then 3
+              Else 99
+            </Property>
+          </SubRecord>
+          
+          <!-- Processing Metadata -->
+          <SubRecord>
+            <Property Name="Name">PROCESSING_DATE</Property>
+            <Property Name="Expression">#PROCESSING_DATE#</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">PROCESSING_TIMESTAMP</Property>
+            <Property Name="Expression">CurrentTimestamp()</Property>
+          </SubRecord>
+        </Collection>
+        
+        <!-- Constraints for routing -->
+        <Collection Name="Constraints">
+          <SubRecord>
+            <Property Name="Name">NEW_MASTERS</Property>
+            <Property Name="Expression">MATCH_TYPE = "NEW" Or MATCH_TYPE = "NO_MATCH"</Property>
+            <Property Name="OutputLink">NEW_OUTPUT</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">EXACT_MATCHES</Property>
+            <Property Name="Expression">MATCH_TYPE = "EXACT_MATCH"</Property>
+            <Property Name="OutputLink">EXACT_OUTPUT</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">AUTO_MERGE_CANDIDATES</Property>
+            <Property Name="Expression">MATCH_TYPE = "HIGH_CONFIDENCE" And #AUTO_MERGE# = 1</Property>
+            <Property Name="OutputLink">MERGE_OUTPUT</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">MANUAL_REVIEW</Property>
+            <Property Name="Expression">MATCH_TYPE = "POSSIBLE_MATCH" Or (MATCH_TYPE = "HIGH_CONFIDENCE" And #AUTO_MERGE# = 0)</Property>
+            <Property Name="OutputLink">REVIEW_OUTPUT</Property>
+          </SubRecord>
+        </Collection>
+      </Record>
+      
+      <!-- Stage: Target - New Master Records -->
+      <Record Identifier="TARGET_NEW_MASTERS" Type="ODBCConnectorPX">
+        <Property Name="StageType">Target</Property>
+        <Property Name="ConnectionString">#MDM_DB_CONN#</Property>
+        <Property Name="TableName">MDM_CUSTOMER_MASTER</Property>
+        <Property Name="WriteMode">Insert</Property>
+        <Property Name="GenerateKey">1</Property>
+        <Property Name="KeyColumn">MASTER_ID</Property>
+      </Record>
+      
+      <!-- Stage: Target - Source System Links -->
+      <Record Identifier="TARGET_SOURCE_LINKS" Type="ODBCConnectorPX">
+        <Property Name="StageType">Target</Property>
+        <Property Name="ConnectionString">#MDM_DB_CONN#</Property>
+        <Property Name="TableName">MDM_SOURCE_LINKS</Property>
+        <Property Name="WriteMode">Append</Property>
+      </Record>
+      
+      <!-- Stage: Target - Match Review Queue -->
+      <Record Identifier="TARGET_REVIEW_QUEUE" Type="ODBCConnectorPX">
+        <Property Name="StageType">Target</Property>
+        <Property Name="ConnectionString">#MDM_DB_CONN#</Property>
+        <Property Name="TableName">MDM_MATCH_REVIEW_QUEUE</Property>
+        <Property Name="WriteMode">Append</Property>
+      </Record>
+      
+      <!-- Stage: Target - Processing Log -->
+      <Record Identifier="TARGET_PROCESSING_LOG" Type="ODBCConnectorPX">
+        <Property Name="StageType">Target</Property>
+        <Property Name="ConnectionString">#MDM_DB_CONN#</Property>
+        <Property Name="TableName">MDM_PROCESSING_LOG</Property>
+        <Property Name="WriteMode">Append</Property>
+      </Record>
+      
+      <!-- Links between stages -->
+      <Record Identifier="LINK_CRM_TO_FUNNEL" Type="Link">
+        <Property Name="From">SOURCE_CRM</Property>
+        <Property Name="To">FUNNEL_ALL_SOURCES</Property>
+      </Record>
+      <Record Identifier="LINK_ERP_TO_FUNNEL" Type="Link">
+        <Property Name="From">SOURCE_ERP</Property>
+        <Property Name="To">FUNNEL_ALL_SOURCES</Property>
+      </Record>
+      <Record Identifier="LINK_ECOM_TO_FUNNEL" Type="Link">
+        <Property Name="From">SOURCE_ECOMMERCE</Property>
+        <Property Name="To">FUNNEL_ALL_SOURCES</Property>
+      </Record>
+      <Record Identifier="LINK_FUNNEL_TO_STANDARDIZE" Type="Link">
+        <Property Name="From">FUNNEL_ALL_SOURCES</Property>
+        <Property Name="To">TRANSFORM_STANDARDIZE</Property>
+      </Record>
+      <Record Identifier="LINK_STANDARDIZE_TO_LOOKUP" Type="Link">
+        <Property Name="From">TRANSFORM_STANDARDIZE</Property>
+        <Property Name="To">LOOKUP_MASTER_RECORDS</Property>
+      </Record>
+      <Record Identifier="LINK_LOOKUP_TO_MATCHING" Type="Link">
+        <Property Name="From">LOOKUP_MASTER_RECORDS</Property>
+        <Property Name="To">TRANSFORM_MATCHING</Property>
+      </Record>
+      <Record Identifier="LINK_MATCHING_TO_NEW" Type="Link">
+        <Property Name="From">TRANSFORM_MATCHING.NEW_OUTPUT</Property>
+        <Property Name="To">TARGET_NEW_MASTERS</Property>
+      </Record>
+      <Record Identifier="LINK_MATCHING_TO_LINKS" Type="Link">
+        <Property Name="From">TRANSFORM_MATCHING</Property>
+        <Property Name="To">TARGET_SOURCE_LINKS</Property>
+      </Record>
+      <Record Identifier="LINK_MATCHING_TO_REVIEW" Type="Link">
+        <Property Name="From">TRANSFORM_MATCHING.REVIEW_OUTPUT</Property>
+        <Property Name="To">TARGET_REVIEW_QUEUE</Property>
+      </Record>
+      <Record Identifier="LINK_MATCHING_TO_LOG" Type="Link">
+        <Property Name="From">TRANSFORM_MATCHING</Property>
+        <Property Name="To">TARGET_PROCESSING_LOG</Property>
+      </Record>
+    </Record>
+  </Job>
+</DSExport>

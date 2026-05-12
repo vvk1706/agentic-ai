@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  IBM DataStage Job: Customer Data ETL Pipeline
+  Description: Extracts customer data from source database, transforms it, and loads into target warehouse
+  Author: DataStage Examples
+  Version: 1.0
+-->
+<DSExport>
+  <Job Identifier="CUSTOMER_DATA_ETL" DateModified="2026-04-09" TimeModified="22:00:00">
+    <Record Identifier="JOB" Type="ServerJob" Readonly="0">
+      <Property Name="Description">Customer Data ETL - Extract, Transform, Load customer information</Property>
+      <Property Name="JobVersion">1.0.0</Property>
+      <Property Name="NULLIndicatorPosition">0</Property>
+      <Property Name="ParameterFileDDName">DD00001</Property>
+      <Property Name="ValidationStatus">0</Property>
+      
+      <!-- Job Parameters -->
+      <Collection Name="Parameters" Type="JobParameter">
+        <SubRecord>
+          <Property Name="Name">SOURCE_DB_CONN</Property>
+          <Property Name="Prompt">Source Database Connection</Property>
+          <Property Name="Default">CUSTOMER_SOURCE_DB</Property>
+          <Property Name="ParamType">String</Property>
+        </SubRecord>
+        <SubRecord>
+          <Property Name="Name">TARGET_DB_CONN</Property>
+          <Property Name="Prompt">Target Database Connection</Property>
+          <Property Name="Default">CUSTOMER_DW</Property>
+          <Property Name="ParamType">String</Property>
+        </SubRecord>
+        <SubRecord>
+          <Property Name="Name">BATCH_DATE</Property>
+          <Property Name="Prompt">Batch Processing Date</Property>
+          <Property Name="Default">CurrentDate()</Property>
+          <Property Name="ParamType">Date</Property>
+        </SubRecord>
+        <SubRecord>
+          <Property Name="Name">COMMIT_INTERVAL</Property>
+          <Property Name="Prompt">Commit Interval</Property>
+          <Property Name="Default">1000</Property>
+          <Property Name="ParamType">Integer</Property>
+        </SubRecord>
+      </Collection>
+      
+      <!-- Stage: Source - Customer Database -->
+      <Record Identifier="SOURCE_CUSTOMERS" Type="ODBCConnectorPX">
+        <Property Name="StageType">Source</Property>
+        <Property Name="ConnectionString">#SOURCE_DB_CONN#</Property>
+        <Property Name="TableName">CUSTOMERS</Property>
+        <Property Name="SelectStatement">
+          SELECT 
+            CUSTOMER_ID,
+            FIRST_NAME,
+            LAST_NAME,
+            EMAIL,
+            PHONE,
+            ADDRESS,
+            CITY,
+            STATE,
+            ZIP_CODE,
+            COUNTRY,
+            DATE_OF_BIRTH,
+            REGISTRATION_DATE,
+            CUSTOMER_STATUS,
+            LAST_UPDATED
+          FROM CUSTOMERS
+          WHERE LAST_UPDATED >= CURRENT_DATE - 1
+        </Property>
+        <Collection Name="Columns">
+          <SubRecord>
+            <Property Name="Name">CUSTOMER_ID</Property>
+            <Property Name="SqlType">INTEGER</Property>
+            <Property Name="Nullable">0</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">FIRST_NAME</Property>
+            <Property Name="SqlType">VARCHAR</Property>
+            <Property Name="Length">50</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">LAST_NAME</Property>
+            <Property Name="SqlType">VARCHAR</Property>
+            <Property Name="Length">50</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">EMAIL</Property>
+            <Property Name="SqlType">VARCHAR</Property>
+            <Property Name="Length">100</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">PHONE</Property>
+            <Property Name="SqlType">VARCHAR</Property>
+            <Property Name="Length">20</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">ADDRESS</Property>
+            <Property Name="SqlType">VARCHAR</Property>
+            <Property Name="Length">200</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">CITY</Property>
+            <Property Name="SqlType">VARCHAR</Property>
+            <Property Name="Length">50</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">STATE</Property>
+            <Property Name="SqlType">VARCHAR</Property>
+            <Property Name="Length">50</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">ZIP_CODE</Property>
+            <Property Name="SqlType">VARCHAR</Property>
+            <Property Name="Length">10</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">COUNTRY</Property>
+            <Property Name="SqlType">VARCHAR</Property>
+            <Property Name="Length">50</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">DATE_OF_BIRTH</Property>
+            <Property Name="SqlType">DATE</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">REGISTRATION_DATE</Property>
+            <Property Name="SqlType">TIMESTAMP</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">CUSTOMER_STATUS</Property>
+            <Property Name="SqlType">VARCHAR</Property>
+            <Property Name="Length">20</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">LAST_UPDATED</Property>
+            <Property Name="SqlType">TIMESTAMP</Property>
+          </SubRecord>
+        </Collection>
+      </Record>
+      
+      <!-- Stage: Transformer - Data Cleansing and Enrichment -->
+      <Record Identifier="TRANSFORM_CUSTOMERS" Type="PxTransformer">
+        <Property Name="StageType">Transformer</Property>
+        <Collection Name="Derivations">
+          <SubRecord>
+            <Property Name="Name">FULL_NAME</Property>
+            <Property Name="Expression">Trim(FIRST_NAME) : " " : Trim(LAST_NAME)</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">EMAIL_CLEAN</Property>
+            <Property Name="Expression">Trim(Upcase(EMAIL))</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">PHONE_CLEAN</Property>
+            <Property Name="Expression">Convert("[^0-9]", "", PHONE)</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">AGE</Property>
+            <Property Name="Expression">YearFromDate(CurrentDate()) - YearFromDate(DATE_OF_BIRTH)</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">CUSTOMER_SEGMENT</Property>
+            <Property Name="Expression">
+              If AGE < 25 Then "YOUNG_ADULT"
+              Else If AGE < 45 Then "MIDDLE_AGE"
+              Else If AGE < 65 Then "SENIOR"
+              Else "ELDERLY"
+            </Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">IS_ACTIVE</Property>
+            <Property Name="Expression">If CUSTOMER_STATUS = "ACTIVE" Then 1 Else 0</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">ETL_TIMESTAMP</Property>
+            <Property Name="Expression">CurrentTimestamp()</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">ETL_BATCH_ID</Property>
+            <Property Name="Expression">#BATCH_DATE#</Property>
+          </SubRecord>
+        </Collection>
+        <Collection Name="Constraints">
+          <SubRecord>
+            <Property Name="Name">VALID_RECORDS</Property>
+            <Property Name="Expression">Not(IsNull(CUSTOMER_ID)) And Not(IsNull(EMAIL)) And Len(EMAIL_CLEAN) > 0</Property>
+            <Property Name="OutputLink">VALID_OUTPUT</Property>
+          </SubRecord>
+          <SubRecord>
+            <Property Name="Name">INVALID_RECORDS</Property>
+            <Property Name="Expression">Otherwise</Property>
+            <Property Name="OutputLink">REJECT_OUTPUT</Property>
+          </SubRecord>
+        </Collection>
+      </Record>
+      
+      <!-- Stage: Target - Customer Data Warehouse -->
+      <Record Identifier="TARGET_CUSTOMER_DW" Type="ODBCConnectorPX">
+        <Property Name="StageType">Target</Property>
+        <Property Name="ConnectionString">#TARGET_DB_CONN#</Property>
+        <Property Name="TableName">DW_CUSTOMERS</Property>
+        <Property Name="WriteMode">Insert</Property>
+        <Property Name="UpdateAction">Update</Property>
+        <Property Name="CommitInterval">#COMMIT_INTERVAL#</Property>
+        <Property Name="BeforeSQL">TRUNCATE TABLE DW_CUSTOMERS_STAGING</Property>
+        <Property Name="AfterSQL">
+          MERGE INTO DW_CUSTOMERS tgt
+          USING DW_CUSTOMERS_STAGING src
+          ON tgt.CUSTOMER_ID = src.CUSTOMER_ID
+          WHEN MATCHED THEN UPDATE SET
+            tgt.FULL_NAME = src.FULL_NAME,
+            tgt.EMAIL = src.EMAIL_CLEAN,
+            tgt.PHONE = src.PHONE_CLEAN,
+            tgt.AGE = src.AGE,
+            tgt.CUSTOMER_SEGMENT = src.CUSTOMER_SEGMENT,
+            tgt.IS_ACTIVE = src.IS_ACTIVE,
+            tgt.LAST_UPDATED = src.ETL_TIMESTAMP
+          WHEN NOT MATCHED THEN INSERT VALUES (
+            src.CUSTOMER_ID, src.FULL_NAME, src.EMAIL_CLEAN, 
+            src.PHONE_CLEAN, src.AGE, src.CUSTOMER_SEGMENT, 
+            src.IS_ACTIVE, src.ETL_TIMESTAMP
+          )
+        </Property>
+      </Record>
+      
+      <!-- Stage: Reject File - Invalid Records -->
+      <Record Identifier="REJECT_FILE" Type="SequentialFile">
+        <Property Name="StageType">Target</Property>
+        <Property Name="FileName">/data/rejects/customer_rejects_#BATCH_DATE#.csv</Property>
+        <Property Name="FileFormat">Delimited</Property>
+        <Property Name="Delimiter">,</Property>
+        <Property Name="IncludeHeader">1</Property>
+      </Record>
+      
+      <!-- Links between stages -->
+      <Record Identifier="LINK_SOURCE_TO_TRANSFORM" Type="Link">
+        <Property Name="From">SOURCE_CUSTOMERS</Property>
+        <Property Name="To">TRANSFORM_CUSTOMERS</Property>
+      </Record>
+      <Record Identifier="LINK_TRANSFORM_TO_TARGET" Type="Link">
+        <Property Name="From">TRANSFORM_CUSTOMERS.VALID_OUTPUT</Property>
+        <Property Name="To">TARGET_CUSTOMER_DW</Property>
+      </Record>
+      <Record Identifier="LINK_TRANSFORM_TO_REJECT" Type="Link">
+        <Property Name="From">TRANSFORM_CUSTOMERS.REJECT_OUTPUT</Property>
+        <Property Name="To">REJECT_FILE</Property>
+      </Record>
+    </Record>
+  </Job>
+</DSExport>

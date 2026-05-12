@@ -1,0 +1,41 @@
+TRANSACTION_ID,TRANSACTION_DATE,TRANSACTION_TIME,PRODUCT_ID,PRODUCT_NAME,PRODUCT_CATEGORY,QUANTITY,UNIT_PRICE,DISCOUNT_AMOUNT,TAX_AMOUNT,TOTAL_AMOUNT,CUSTOMER_ID,STORE_ID,STORE_NAME,REGION,COUNTRY,PAYMENT_METHOD,SALES_CHANNEL,TRANSACTION_STATUS
+TXN001,2026-04-08,09:15:30,2001,Laptop Pro 15,Electronics,1,1299.99,50.00,104.00,1353.99,1001,101,Downtown Store,Northeast,USA,Credit Card,In-Store,COMPLETED
+TXN002,2026-04-08,10:22:15,2002,Wireless Mouse,Electronics,2,29.99,0.00,4.80,64.78,1002,101,Downtown Store,Northeast,USA,Debit Card,In-Store,COMPLETED
+TXN003,2026-04-08,11:45:00,2003,Office Chair,Furniture,1,249.99,25.00,18.00,242.99,1003,102,Westside Mall,West,USA,Credit Card,In-Store,COMPLETED
+TXN004,2026-04-08,13:30:45,2004,Desk Lamp,Home & Office,3,39.99,5.00,8.10,127.87,1004,103,Eastside Plaza,East,USA,Cash,In-Store,COMPLETED
+TXN005,2026-04-08,14:15:20,2005,Notebook Set,Stationery,5,12.99,0.00,5.20,70.15,1005,101,Downtown Store,Northeast,USA,Credit Card,In-Store,COMPLETED
+TXN006,2026-04-08,15:00:00,2001,Laptop Pro 15,Electronics,1,1299.99,100.00,96.00,1295.99,1006,104,Southside Center,South,USA,Credit Card,Online,COMPLETED
+TXN007,2026-04-08,16:20:30,2006,Ergonomic Keyboard,Electronics,1,89.99,10.00,6.40,86.39,1007,102,Westside Mall,West,USA,Debit Card,In-Store,COMPLETED
+TXN008,2026-04-08,17:45:15,2007,Monitor 27 inch,Electronics,2,349.99,30.00,55.20,725.18,1008,103,Eastside Plaza,East,USA,Credit Card,In-Store,COMPLETED
+TXN009,2026-04-09,08:30:00,2008,Standing Desk,Furniture,1,599.99,50.00,44.00,593.99,1009,101,Downtown Store,Northeast,USA,Credit Card,Online,COMPLETED
+TXN010,2026-04-09,09:15:45,2009,Printer All-in-One,Electronics,1,199.99,20.00,14.40,194.39,1010,102,Westside Mall,West,USA,Debit Card,In-Store,COMPLETED
+TXN011,2026-04-09,10:00:20,2010,USB Hub,Electronics,4,24.99,0.00,8.00,107.96,1011,104,Southside Center,South,USA,Credit Card,In-Store,COMPLETED
+TXN012,2026-04-09,11:30:00,2003,Office Chair,Furniture,2,249.99,40.00,33.60,493.58,1012,103,Eastside Plaza,East,USA,Cash,In-Store,COMPLETED
+TXN013,2026-04-09,12:45:30,2011,Webcam HD,Electronics,1,79.99,5.00,6.00,80.99,1013,101,Downtown Store,Northeast,USA,Credit Card,Online,COMPLETED
+TXN014,2026-04-09,13:20:15,2012,Desk Organizer,Home & Office,3,19.99,0.00,4.80,64.77,1014,102,Westside Mall,West,USA,Debit Card,In-Store,COMPLETED
+TXN015,2026-04-09,14:00:00,2013,Headphones Wireless,Electronics,1,149.99,15.00,10.80,145.79,1015,104,Southside Center,South,USA,Credit Card,In-Store,COMPLETED
+TXN016,2026-04-09,15:15:45,2014,Bookshelf,Furniture,1,179.99,20.00,12.80,172.79,1016,103,Eastside Plaza,East,USA,Credit Card,Online,COMPLETED
+TXN017,2026-04-09,16:30:20,2002,Wireless Mouse,Electronics,5,29.99,10.00,11.20,160.15,1017,101,Downtown Store,Northeast,USA,Cash,In-Store,COMPLETED
+TXN018,2026-04-09,17:00:00,2015,Tablet 10 inch,Electronics,1,399.99,40.00,28.80,388.79,1018,102,Westside Mall,West,USA,Credit Card,In-Store,COMPLETED
+TXN019,2026-04-08,09:45:30,2016,Pen Set Premium,Stationery,2,24.99,0.00,4.00,53.98,1019,104,Southside Center,South,USA,Debit Card,In-Store,COMPLETED
+TXN020,2026-04-08,10:30:15,2017,Filing Cabinet,Furniture,1,299.99,30.00,21.60,291.59,1020,103,Eastside Plaza,East,USA,Credit Card,In-Store,COMPLETED
+TXN021,2026-04-08,11:15:00,2018,Desk Mat,Home & Office,2,34.99,5.00,5.20,75.18,1021,101,Downtown Store,Northeast,USA,Cash,In-Store,COMPLETED
+TXN022,2026-04-08,12:00:45,2019,External SSD 1TB,Electronics,1,129.99,10.00,9.60,129.59,1022,102,Westside Mall,West,USA,Credit Card,Online,COMPLETED
+TXN023,2026-04-08,13:45:20,2020,Conference Table,Furniture,1,899.99,100.00,64.00,863.99,1023,104,Southside Center,South,USA,Credit Card,In-Store,COMPLETED
+TXN024,2026-04-08,14:30:00,2004,Desk Lamp,Home & Office,4,39.99,8.00,11.20,163.76,1024,103,Eastside Plaza,East,USA,Debit Card,In-Store,COMPLETED
+TXN025,2026-04-08,15:15:30,2021,Smartphone Case,Electronics,3,19.99,0.00,4.80,64.77,1025,101,Downtown Store,Northeast,USA,Cash,In-Store,COMPLETED
+TXN026,2026-04-09,08:00:00,2001,Laptop Pro 15,Electronics,2,1299.99,150.00,184.00,2533.98,1001,102,Westside Mall,West,USA,Credit Card,Online,COMPLETED
+TXN027,2026-04-09,09:30:45,2022,Whiteboard,Home & Office,1,89.99,10.00,6.40,86.39,1002,104,Southside Center,South,USA,Debit Card,In-Store,COMPLETED
+TXN028,2026-04-09,10:15:20,2023,Cable Management,Electronics,5,14.99,0.00,6.00,80.95,1003,103,Eastside Plaza,East,USA,Credit Card,In-Store,COMPLETED
+TXN029,2026-04-09,11:00:00,2024,Stapler Heavy Duty,Stationery,2,29.99,3.00,4.40,61.38,1004,101,Downtown Store,Northeast,USA,Cash,In-Store,COMPLETED
+TXN030,2026-04-09,12:30:15,2025,Laptop Stand,Electronics,1,49.99,5.00,3.60,48.59,1005,102,Westside Mall,West,USA,Credit Card,In-Store,COMPLETED
+TXN031,2026-04-09,13:15:45,2008,Standing Desk,Furniture,1,599.99,60.00,43.20,583.19,1006,104,Southside Center,South,USA,Credit Card,Online,COMPLETED
+TXN032,2026-04-09,14:00:30,2026,Paper Shredder,Home & Office,1,119.99,15.00,8.40,113.39,1007,103,Eastside Plaza,East,USA,Debit Card,In-Store,COMPLETED
+TXN033,2026-04-09,15:30:00,2027,Surge Protector,Electronics,3,34.99,5.00,7.80,112.77,1008,101,Downtown Store,Northeast,USA,Cash,In-Store,COMPLETED
+TXN034,2026-04-09,16:15:20,2028,Desk Calendar,Stationery,4,9.99,0.00,3.20,43.16,1009,102,Westside Mall,West,USA,Credit Card,In-Store,COMPLETED
+TXN035,2026-04-09,17:00:45,2029,Monitor Arm,Electronics,1,79.99,8.00,5.76,77.75,1010,104,Southside Center,South,USA,Debit Card,In-Store,COMPLETED
+TXN036,2026-04-08,09:00:00,2030,Drawer Unit,Furniture,1,149.99,15.00,10.80,145.79,1011,103,Eastside Plaza,East,USA,Credit Card,In-Store,COMPLETED
+TXN037,2026-04-08,10:45:30,2005,Notebook Set,Stationery,10,12.99,10.00,9.60,139.50,1012,101,Downtown Store,Northeast,USA,Cash,In-Store,COMPLETED
+TXN038,2026-04-08,11:30:15,2013,Headphones Wireless,Electronics,2,149.99,25.00,21.60,296.58,1013,102,Westside Mall,West,USA,Credit Card,Online,COMPLETED
+TXN039,2026-04-08,12:15:00,2031,Task Light,Home & Office,2,44.99,5.00,6.40,91.38,1014,104,Southside Center,South,USA,Debit Card,In-Store,COMPLETED
+TXN040,2026-04-08,13:00:45,2032,Bluetooth Speaker,Electronics,1,69.99,7.00,5.04,67.03,1015,103,Eastside Plaza,East,USA,Credit Card,In-Store,COMPLETED
